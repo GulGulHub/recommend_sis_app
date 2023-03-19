@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block head %}
+<title>Welcome To Recommend A Sista</title>
+<link rel="stylesheet" href="static/style.css">
+
+{% endblock %}
+{% block side %}
+
+<p> find a sist*A</p>
+<p> recommend a sista</p>
+<p> settings </p>
+
+
+{% endblock %}
+
+{% block col %}
+{% for mesg in get_flashed_messages() %}
+<h1>{{ mesg }}</h1>
+{% endfor %}
+
+
+<!-- Foto von <a href="https://unsplash.com/@wonderlane?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Wonderlane</a> auf <a href="https://unsplash.com/de/s/fotos/star-trek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  -->
+
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{url_for('static', filename='enterprise.jpg')}}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="Lets get started">Welcome back {{ name }}</h5>
+                <p class="card-text">Here is an overview of your last searches and recommendations</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a href="{{ url_for('find')}}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Find A Sist*A</a>
+    <a href="{{ url_for('recommend')}}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Recommend A Sist*A</a>
+    <a href="{{ url_for('show_all')}}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">All Sist*As</a>
+</div>
+
+
+    <!-- this is where the second tab starts -------------------------------------------------------------------------------->
+
+
+        <!-- this is where the second tab starts ------------------------------------------------------------------------------>
+
+    <!-- third one -->
+
+
+
+
+</div>
+</div>
+
+
+
+{% endblock %}
+{% block body %}
+
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+{% block head %}
+<title>Log In </title>
+<link rel="stylesheet" href="static/style.css">
+{% endblock %}
+
+{% block side %}
+
+<ul class="nav nav-pills flex-column">
+  <li class="nav-item">
+    <a class="nav-link text-dark" aria-current="page" href="{{url_for('find')}}">Find</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{{url_for('recommend')}}">Recommend</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{{url_for('show_all')}}">See All</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="#" > Create Profile </a>
+  </li>
+</ul>
+
+{% endblock side %}
+
+
+{% block col %}
+
+ {% for mesg in get_flashed_messages() %}
+      <h1>{{ mesg }}</h1>
+      {% endfor %}
+
+<div>
+     <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Recommend a Sist_a</legend>
+                        <div class="form-group">
+                            {{ form.fullname.label(class="form-control-label") }}
+                            {% if form.fullname.errors %}
+                            {{ form.fullname(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.fullname.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.fullname(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+
+                        <div class="form-group">
+                            {{ form.description.label(class="form-control-label") }}
+                            {% if form.description.errors %}
+                            {{ form.description(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.description(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+
+                        <div class="form-group">
+                            {{ form.contact.label(class="form-control-label") }}
+                            {% if form.contact.errors %}
+                            {{ form.contact(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.contact.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.contact(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+
+                        <div class="form-group">
+                            {{ form.address.label(class="form-control-label") }}
+                            {% if form.address.errors %}
+                            {{ form.address(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.address.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.address(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class='btn btn-outline-info')}}
+                    </div>
+                </form>
+
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block head %}
+<title>Log In </title>
+<link rel="stylesheet" href="static/style.css">
+{% endblock %}
+
+{% block side %}
+
+<ul class="nav nav-pills flex-column">
+  <li class="nav-item">
+    <a class="nav-link text-dark" aria-current="page" href="{{url_for('find')}}">Find</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{{url_for('recommend')}}">Recommend</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{{url_for('show_all')}}">See All</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="#" > Create Profile </a>
+  </li>
+</ul>
+
+{% endblock side %}
+
+
+{% block col %}
+
+ {% for mesg in get_flashed_messages() %}
+      <h1>{{ mesg }}</h1>
+      {% endfor %}
+
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Address</th>
+    </tr>
+  </thead>
+  <tbody>
+
+ {% for sister in all_sisters %}
+    <tr>
+
+      <th scope="row"</th>
+
+      <td>{{sister.fullname}}</td>
+      <td>{{sister.description}}</td>
+      <td>{{sister.contact}}</td>
+        <td>{{sister.address}}</td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock col%}

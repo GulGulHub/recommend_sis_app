@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block head %}
+<title>TEST_FIND </title>
+
+
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.26/"></script>
+
+  <script>
+
+  require([
+    "esri/config",
+    "esri/Map",
+    "esri/views/MapView",
+
+    "esri/widgets/Search"
+
+  ], function(esriConfig, Map, MapView, Search) {
+
+  esriConfig.apiKey = "{{MAP_KEY}}";
+
+  const map = new Map({
+      basemap: "arcgis-navigation"
+    });
+
+  const view = new MapView({
+      container: "viewDiv",
+      map: map,
+      center: [-122.3321,47.6062],
+      zoom: 12
+    });
+
+  const search = new Search({  //Add Search widget
+      view: view
+    });
+
+    view.ui.add(search, "top-right"); //Add to the map
+
+      });
+  </script>
+
+{% endblock head%}
+
+{% block side %}
+
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item">
+        <a class="nav-link text-dark" aria-current="page" href="{{url_for('find')}}">Find</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="{{url_for('recommend')}}">Recommend</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="{{url_for('show_all')}}">See All</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#"> Create Profile </a>
+    </li>
+</ul>
+
+{% endblock side %}
+
+{% block col %}
+
+
+
+  <div id="viewDiv"></div>
+
+
+
+{% endblock col%}
