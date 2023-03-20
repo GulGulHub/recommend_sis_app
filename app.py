@@ -11,6 +11,9 @@ from flask_sqlalchemy import SQLAlchemy
 #from dotenv import load_dotenv   #for python-dotenv method                  #for python-dotenv method
 import os
 from database_creator import db, setup_db, db_drop_and_create_all
+from dotenv import load_dotenv   #for python-dotenv method
+load_dotenv()                    #for python-dotenv method
+
 #from flask_cors import CORS
 
 
@@ -22,7 +25,7 @@ with app.app_context():
 
 
 
-MAP_KEY = os.environ.get('MAP_API_KEY')
+MAP_KEY = os.environ.get('MAP_API_KEY', "MAP_API_Key is not loading?")
 
 
 

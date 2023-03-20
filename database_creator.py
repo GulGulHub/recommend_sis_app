@@ -11,7 +11,7 @@ db = SQLAlchemy()
 setup_db(app):
     binds a flask application and a SQLAlchemy service
 '''
-MY_SQL_KEY = os.environ.get("MYSQL_KEY")
+MY_SQL_KEY = os.environ.get("MYSQL_KEY", "MYSQL Key is not loading?")
 SUPER_SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
