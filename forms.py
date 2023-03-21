@@ -111,3 +111,15 @@ class RecommendSisterForm(FlaskForm):
 #     coord_longitude = HiddenField('Longitude', validators=[DataRequired()])
 #
 #     submit = SubmitField('Create Location')
+
+class FindForm(FlaskForm):
+
+    search_description = StringField(
+        'Search for Service or Buisness "Massage"',
+        validators=
+        [DataRequired(),
+         Length(min=2, max=200)
+         ]
+    )
+    submit = SubmitField('Find')
+

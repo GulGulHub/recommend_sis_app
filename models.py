@@ -53,10 +53,10 @@ class Sister(UserMixin, db.Model):
 
     @classmethod
     def get_by_id(cls, user_id):
-        return cls.query.filter_by(id=user_id).first()
+        return cls.query.filter_by(id=userid).first()
 
     def __repr__(self):
-        return f"User({self.id}, '{self.display_name}', '{self.email}')"
+        return f"[{self.id}, '{self.fullname}', '{self.description}']"
 
     def insert(self):
         db.session.add(self)

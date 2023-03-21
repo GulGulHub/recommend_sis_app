@@ -3,7 +3,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 #from flask_cors import CORS
 import traceback
 from models import User, Sister
-from forms import RegistrationForm, LoginForm, RecommendSisterForm
+from forms import RegistrationForm, LoginForm, RecommendSisterForm, FindForm
 from sqlalchemy.exc import IntegrityError
 import hashlib
 from flask_sqlalchemy import SQLAlchemy
@@ -109,10 +109,24 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/find', methods=['GET'])
+@app.route('/find', methods=['GET', 'POST'])
 #@login_required()
 def find():
-    return render_template("find.html", MAP_KEY=MAP_KEY)
+    form = FindForm()
+    if form.validate_on_submit():
+        search = form.search_description.data,
+        find_query = Sister.query.filter_by(description=form.search_description.data).all()
+        if find_query:
+            flash(f"Yes, ,it worked!!!")
+            return render_template("find.html", MAP_KEY=MAP_KEY, form= form, findData=find_query)
+        else:
+            flash("no recommendation with that name found")
+    return render_template("find.html", MAP_KEY=MAP_KEY, form=form)
+
+@app.route('/reverseFind', methods=['GET'])
+#@login_required()
+def reverseFind():
+    return render_template("reverseFind.html", MAP_KEY=MAP_KEY)
 
 @app.route("/recommend", methods=['GET', 'POST'])
 #@login_required()

@@ -35,7 +35,7 @@ body,
 }
 
 #mamaDiv {
- height: 100%;
+
   margin: 0;
   padding: 0;
 }
@@ -48,3 +48,14 @@ body,
 
       }
 
+   /*   #map {
+        position: relative;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #323232;
+      }
+      */
