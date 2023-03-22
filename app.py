@@ -161,3 +161,9 @@ def show_all():
 def testfind():
     return render_template("testfind.html", MAP_KEY=MAP_KEY)
 
+@app.route('/absoluteTest', methods=['GET','POST'])
+#@login_required
+def absoluteTest():
+    return render_template("absoluteTest.html", MAP_KEY=MAP_KEY)
+
+

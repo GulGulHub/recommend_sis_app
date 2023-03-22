@@ -91,60 +91,9 @@
 
       const apiKey = "{{MAP_KEY}}";
 
-       const basemapEnum = "ArcGIS:Navigation";
-
-         const map = L.map("map", {
-        minZoom: 2
-      })
-
-       map.setView([52.520008, 13.404954], 14); // Sydney
-
-
-            L.esri.Vector.vectorBasemapLayer(basemapEnum, {
-        apiKey: apiKey
-      }).addTo(map);
-
-       const searchControl = L.esri.Geocoding.geosearch({
-        position: "topright",
-        placeholder: "Enter an address or place e.g. 1 York St",
-        useMapBounds: false,
-
-
-        providers: [
-          L.esri.Geocoding.arcgisOnlineProvider({
-            apikey: apiKey,
-            nearby: {
-              lat: 52.520008,
-              lng: 13.404954
-            }
-          })
-        ]
-
-      }).addTo(map);
-
-    const results = L.layerGroup().addTo(map);
-
-    searchControl.on("results", (data) => {
-        results.clearLayers();
-
-        for (let i = data.results.length - 1; i >= 0; i--) {
-          const marker = L.marker(data.results[i].latlng);
-
-          const lngLatString = `${Math.round(data.results[i].latlng.lng * 100000) / 100000}, ${
-            Math.round(data.results[i].latlng.lat * 100000) / 100000
-          }`;
-          marker.bindPopup(`<b>${lngLatString}</b><p>${data.results[i].properties.LongLabel}</p>`);
-
-          results.addLayer(marker);
-
-            marker.openPopup();
-
-        }
-
-      });
-
 
         </script>
+<script src="{{ url_for('static', filename='reverseFind.js') }}"></script>
 
 
         {% endblock col%}
