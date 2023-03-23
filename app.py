@@ -156,10 +156,19 @@ def show_all():
     all_sisters = Sister.query.all()
     return render_template("all.html", all_sisters = all_sisters)
 
-@app.route('/testfind', methods=['GET','POST'])
-#@login_required
+@app.route('/testfind', methods=['GET', 'POST'])
+#@login_required()
 def testfind():
-    return render_template("testfind.html", MAP_KEY=MAP_KEY)
+    form = FindForm()
+    if form.validate_on_submit():
+        search = form.search_description.data,
+        find_query = Sister.query.filter_by(description=form.search_description.data).all()
+        if find_query:
+            flash(f"Yes, ,it worked!!!")
+            return render_template("testfind.html", MAP_KEY=MAP_KEY, form= form, findData=find_query)
+        else:
+            flash("no recommendation with that name found")
+    return render_template("testfind.html", MAP_KEY=MAP_KEY, form=form)
 
 @app.route('/absoluteTest', methods=['GET','POST'])
 #@login_required

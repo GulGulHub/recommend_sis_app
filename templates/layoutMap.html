@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Recommend A Sist*A</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- add any additional stylesheets or scripts here -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='styleMap.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body style="font-size: 20pt; padding: 20pt">
+
+<!--here is the top part ---------------------------------------------------------------->
+
+
+    <div id="top-section">
+        <h1> Recommend A Sist*A </h1>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div id="flashes">
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="box-wrapper">
+    <!--here is the side block --------------------------------------->
+        <div id="sidebar"> 
+            <!-- replace this with your content -->
+            <p>Sidebar content goes here</p>
+            {% block side %}{% endblock %}
+        </div>
+
+     <!---   here is the col block -------------------------------------------------------------->
+
+        <main class="main">
+            <!-- replace this with your content -->
+            <p>Main content goes here</p>
+            {% block col %}{% endblock col %}
+        </main>
+
+        
+
+    </div>
+ 
+    <div class=" mama-div">
+        {% block map %}{% endblock map %}
+    </div>
+
+{% block body %}{% endblock %}
+</body>
+</html>

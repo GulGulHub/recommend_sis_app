@@ -1,0 +1,110 @@
+:root {
+    --violet: linear-gradient(to right, #7d12ff, #ab20fd, #200589);
+    --white: #ffffff;
+  }
+
+
+/* overall styles for the page */
+body {
+    font-size: 20pt;
+    padding: 20pt;
+    
+}
+
+.box-wrapper {
+    display: flex; /* add this */
+}
+
+
+#top-section {
+    width: 100%;
+    height:20%;
+    background: var(--violet);
+}
+
+
+#sidebar {
+    width: 20%;
+    background: var(--violet);
+}
+
+
+main {
+    width: 80%;
+    background: var(--white);
+    padding-left: 50px ;
+}
+
+#form-style {
+    padding-bottom: 50px;
+
+
+}
+
+#mama-div,  {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#viewDiv {
+width:800px;
+height:600px;
+
+}
+
+
+/* styles for the header and sidebar 
+.gradient-custom-2 {
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+}
+
+/* styles for the sidebar 
+.col-2.gradient-custom-2 {
+    /* set the height of the sidebar to match the height of the content in the main column 
+    min-height: calc(100vh - 122px);
+}
+
+/* styles for the main content 
+.col-10.text-center {
+    /* center the content horizontally 
+    margin: 0 auto;
+}
+
+/* styles for the map row 
+.container .row {
+    /* set the height of the map row to 400px 
+    height: 400px;
+    /* add any additional styles as needed 
+}
+
+
+.gradient-custom-2 {
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+}
+
+.gradient-custom-2 {
+    /* fallback for old browsers 
+    background: hotpink;
+    
+    /* Chrome 10-25, Safari 5.1-6 
+    /*background: -webkit-linear-gradient(to right, #7d12, #d8363a, #dd3675, #b44593);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+    background: linear-gradient(to right, #7d12ff, #ab20fd, #200589);
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    height: 100vh !important;
+    }
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+    }
+    }*/

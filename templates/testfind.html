@@ -1,58 +1,26 @@
-{% extends "layout.html" %}
+{% extends "layoutMap.html" %}
 {% block head %}
 <title>TEST_FIND </title>
  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
-  <script src="https://js.arcgis.com/4.26/"></script>
-  <script>
-
+<script src="https://js.arcgis.com/4.26/"></script>
+<script src="{{url_for('static', filename='testFind.js')}}"></script>
+<script>
   require([
-    "esri/config",
-    "esri/Map",
-    "esri/views/MapView",
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+  
+      "esri/Graphic",
+      "esri/layers/GraphicsLayer"
+  
+      ], function(esriConfig,Map, MapView, Graphic, GraphicsLayer) {
+  
+    esriConfig.apiKey = "{{MAP_KEY}}";
+    initMap(esriConfig,Map, MapView, Graphic, GraphicsLayer)
+  
+  
+   });</script>
 
-    "esri/Graphic",
-    "esri/layers/GraphicsLayer"
-
-    ], function(esriConfig,Map, MapView, Graphic, GraphicsLayer) {
-
-  esriConfig.apiKey = "{{MAP_KEY}}";
-
-  const map = new Map({
-    basemap: "arcgis-topographic" //Basemap layer service
-  });
-
-  const view = new MapView({
-    map: map,
-    center: [-118.80500,34.02700], //Longitude, latitude
-    zoom: 13,
-    container: "viewDiv"
- });
-
- const graphicsLayer = new GraphicsLayer();
- map.add(graphicsLayer);
-
- const point = { //Create a point
-    type: "point",
-    longitude: -118.80657463861,
-    latitude: 34.0005930608889
- };
- const simpleMarkerSymbol = {
-    type: "simple-marker",
-    color: [226, 119, 40],  // Orange
-    outline: {
-        color: [255, 255, 255], // White
-        width: 1
-    }
- };
-
- const pointGraphic = new Graphic({
-    geometry: point,
-    symbol: simpleMarkerSymbol
- });
- graphicsLayer.add(pointGraphic);
-
- });
-</script>
 
 
 
@@ -79,10 +47,26 @@
 
 {% block col %}
 
+<div id="form-style">
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4"> Search for a recommendation </legend>
+        <div class="form-group">
+            {{ form.search_description.label(class="form-control-label") }}
+            {{ form.search_description(class="form-control form-control-lg") }}
+        </div>
+     </fieldset>
+        <div class="form-group">
+            {{ form.submit(class='btn btn-outline-info')}}
+        </div>
+      </form>
+</div>
 
 
+<div>
   <div id="viewDiv"></div>
-
+</div>
 
 
 {% endblock col%}
