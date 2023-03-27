@@ -1,25 +1,27 @@
 {% extends "layoutMap.html" %}
 {% block head %}
 <title>TEST_FIND </title>
- <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
+<link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
 <script src="https://js.arcgis.com/4.26/"></script>
 <script src="{{url_for('static', filename='testFind.js')}}"></script>
 <script>
   require([
-      "esri/config",
-      "esri/Map",
-      "esri/views/MapView",
-  
-      "esri/Graphic",
-      "esri/layers/GraphicsLayer"
-  
-      ], function(esriConfig,Map, MapView, Graphic, GraphicsLayer) {
-  
+    "esri/config",
+    "esri/Map",
+    "esri/views/MapView",
+
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer",
+
+    "esri/rest/locator",
+
+  ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
+
     esriConfig.apiKey = "{{MAP_KEY}}";
-    initMap(esriConfig,Map, MapView, Graphic, GraphicsLayer)
-  
-  
-   });</script>
+    initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator)
+
+
+  });</script>
 
 
 
@@ -29,18 +31,18 @@
 {% block side %}
 
 <ul class="nav nav-pills flex-column">
-    <li class="nav-item">
-        <a class="nav-link text-dark" aria-current="page" href="{{url_for('find')}}">Find</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" href="{{url_for('recommend')}}">Recommend</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" href="{{url_for('show_all')}}">See All</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" href="#"> Create Profile </a>
-    </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" aria-current="page" href="{{url_for('find')}}">Find</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{{url_for('recommend')}}">Recommend</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{{url_for('show_all')}}">See All</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="#"> Create Profile </a>
+  </li>
 </ul>
 
 {% endblock side %}
@@ -48,20 +50,47 @@
 {% block col %}
 
 <div id="form-style">
-  <form method="POST" action="">
+  <form method="POST" action="" class="form-inline my-2 my-lg-0" >
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
-        <legend class="border-bottom mb-4"> Search for a recommendation </legend>
-        <div class="form-group">
-            {{ form.search_description.label(class="form-control-label") }}
-            {{ form.search_description(class="form-control form-control-lg") }}
-        </div>
-     </fieldset>
-        <div class="form-group">
-            {{ form.submit(class='btn btn-outline-info')}}
-        </div>
-      </form>
+      <legend class="border-bottom mb-4"> Search for a recommendation </legend>
+      <div class="form-group">
+        {{ form.search_description.label(class="form-control-label") }}
+        {{ form.search_description(class="form-control form-control-lg") }}
+      </div>
+    </fieldset>
+    <div class="form-group">
+      {{ form.submit(class='btn btn-outline-info',onclick="testJS()")}}
+    </div>
+  </form>
 </div>
+
+
+<table id="myTable">
+
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Contact info</th>
+    <th>Address</th>
+  </tr>
+  {% for sister in findData %}
+  <tr>
+    <td>{{sister.fullname}}</td>
+    <td>{{sister.description}}</td>
+    <td>{{sister.contact}}</td>
+    <td class="search_address">{{sister.address}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div id="Test_JS">
+  test:
+</div>
+
+</div>
+</div>
+
 
 
 <div>

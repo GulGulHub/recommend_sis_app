@@ -41,7 +41,19 @@ main {
 
 }
 
-#mama-div,  {
+table {
+
+    padding: 20px;
+    border: 1px solid;
+    margin-bottom: 20px;
+}
+
+td, th{
+    padding: 5px;
+    border: 1px solid;
+}
+
+#mama-div  {
     padding: 0;
     margin: 0;
     height: 100%;

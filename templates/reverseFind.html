@@ -1,86 +1,35 @@
-{% extends "layout.html" %}
+{% extends "layoutMap.html" %}
 {% block head %}
-
-
-    <!-- Load Leaflet from CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@3.0.10/dist/esri-leaflet.js"></script>
-    <script src="https://unpkg.com/esri-leaflet-vector@4.0.1/dist/esri-leaflet-vector.js"></script>
-
-    <!-- Load Esri Leaflet Geocoder from CDN -->
-    <script src="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.js"></script>
-
-     <style>
-    body {
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        position: relative;
-        height: 500px; /* Set the height to whatever you want */
-        width: 100%; /* Set the width to fill the container */
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 14px;
-        color: #323232;
-      }
-    </style>
-
-{% endblock head%}
+  <link rel="stylesheet" href="https://js.arcgis.com/4.24/esri/themes/light/main.css"> 
+  <script src="https://js.arcgis.com/4.24/"></script>
+  <script src="{{ url_for('static', filename='map.js') }}"></script>
+  <script>
+    require(["esri/config","esri/Map", "esri/views/MapView", "esri/Graphic",
+    "esri/layers/GraphicsLayer", "esri/core/reactiveUtils", "esri/geometry/Circle", "esri/rest/locator"], function (esriConfig,Map, MapView, Graphic, GraphicsLayer, reactiveUtils, Circle, locator) {
+      esriConfig.apiKey = "{{map_key}}";
+      initMap(esriConfig,Map, MapView, Graphic, GraphicsLayer, reactiveUtils, Circle, locator);
+    });
+  </script>
+{% endblock %}
 
 
 
 {% block col %}
 
+<nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('find') }}">New Location</a>
+    </li>
+  </ul>
+  <form method="GET" action="" onsubmit="return searchAddressSubmit()" class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" id="search_address" type="search" placeholder="Search near..." aria-label="Search near">
+    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+  </form>   
+</nav>
 
-  <div id="map"></div>
+<div id="viewDiv"></div>
 
 
-   <script>
-
-      const apiKey = "{{MAP_KEY}}";
-
-      const basemapEnum = "ArcGIS:Navigation";
-
-      const map = L.map("map", {
-        minZoom: 2
-      })
-
-      map.setView([48.8566, 2.3522], 13); // Paris
-
-      L.esri.Vector.vectorBasemapLayer(basemapEnum, {
-        apiKey: apiKey
-      }).addTo(map);
-
-      const layerGroup = L.layerGroup().addTo(map);
-
-      map.on("click", function (e) {
-
-        L.esri.Geocoding
-          .reverseGeocode({
-            apikey: apiKey
-          })
-          .latlng(e.latlng)
-
-          .run(function (error, result) {
-            if (error) {
-              return;
-            }
-
-            layerGroup.clearLayers();
-
-            marker = L.marker(result.latlng).addTo(layerGroup);
-
-            const lngLatString = `${Math.round(result.latlng.lng * 100000) / 100000}, ${Math.round(result.latlng.lat * 100000) / 100000}`;
-
-            marker.bindPopup(`<b>${lngLatString}</b><p>${result.address.Match_addr}</p>`);
-            marker.openPopup();
-
-          });
-
-      });
-
-    </script>
-
-{% endblock col%}
+  {% endblock col%}

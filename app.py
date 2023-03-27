@@ -1,11 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify
+
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, login_manager
+
 #from flask_cors import CORS
 import traceback
+
 from models import User, Sister
 from forms import RegistrationForm, LoginForm, RecommendSisterForm, FindForm
 from sqlalchemy.exc import IntegrityError
 import hashlib
+
 from flask_sqlalchemy import SQLAlchemy
 #from flaskext.mysql import MySQL
 #from dotenv import load_dotenv   #for python-dotenv method                  #for python-dotenv method
@@ -165,7 +169,10 @@ def testfind():
         find_query = Sister.query.filter_by(description=form.search_description.data).all()
         if find_query:
             flash(f"Yes, ,it worked!!!")
-            return render_template("testfind.html", MAP_KEY=MAP_KEY, form= form, findData=find_query)
+            sis_list=[]
+            for item in find_query:
+                sis_list.append(item.address)                
+            return render_template("testfind.html", MAP_KEY=MAP_KEY, form= form, findData=find_query, db_address=sis_list)
         else:
             flash("no recommendation with that name found")
     return render_template("testfind.html", MAP_KEY=MAP_KEY, form=form)
