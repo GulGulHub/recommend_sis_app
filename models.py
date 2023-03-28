@@ -54,6 +54,9 @@ class Sister(UserMixin, db.Model):
     @classmethod
     def get_by_id(cls, user_id):
         return cls.query.filter_by(id=userid).first()
+    
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
     def __repr__(self):
         return f"[{self.id}, '{self.fullname}', '{self.description}']"

@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash, abo
 
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, login_manager
 
-#from flask_cors import CORS
+from flask_cors import CORS
 import traceback
 
 from models import User, Sister
@@ -18,14 +18,14 @@ from database_creator import db, setup_db, db_drop_and_create_all
 from dotenv import load_dotenv   #for python-dotenv method
 load_dotenv()                    #for python-dotenv method
 
-#from flask_cors import CORS
+
 
 
 app = Flask(__name__)
 with app.app_context():
     setup_db(app)
     db_drop_and_create_all()
- #   CORS(app)
+    CORS(app)
 
 
 
@@ -183,3 +183,11 @@ def absoluteTest():
     return render_template("absoluteTest.html", MAP_KEY=MAP_KEY)
 
 
+@app.route('/api/getAddress', methods=['GET'])
+def getAddress():
+    tag = request.args.get('tag')
+    if tag:
+        sister= Sister.query.filter_by(description=tag)
+        return jsonify(address= sister.to_dict()),200
+    else:
+        return jsonify(response={"Sorry, could not find Sister?"}), 404

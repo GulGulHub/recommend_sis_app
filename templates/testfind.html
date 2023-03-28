@@ -15,10 +15,10 @@
 
     "esri/rest/locator",
 
-  ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
+  ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer) {
 
     esriConfig.apiKey = "{{MAP_KEY}}";
-    initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator)
+    initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer)
 
 
   });</script>
@@ -50,17 +50,17 @@
 {% block col %}
 
 <div id="form-style">
-  <form method="POST" action="" class="form-inline my-2 my-lg-0" >
+  <form method="POST" action="" class="form-inline my-2 my-lg-0" onsubmit="testTry()">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4"> Search for a recommendation </legend>
       <div class="form-group">
         {{ form.search_description.label(class="form-control-label") }}
-        {{ form.search_description(class="form-control form-control-lg") }}
+        {{ form.search_description(class="form-control form-control-lg", id="search-tag") }}
       </div>
     </fieldset>
     <div class="form-group">
-      {{ form.submit(class='btn btn-outline-info',onclick="testJS()")}}
+      {{ form.submit(class='btn btn-outline-info')}}
     </div>
   </form>
 </div>
