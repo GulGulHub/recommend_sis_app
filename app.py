@@ -1,9 +1,11 @@
+import traceback
+import os
 from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify
 
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, login_manager
 
 from flask_cors import CORS
-import traceback
+
 
 from models import User, Sister
 from forms import RegistrationForm, LoginForm, RecommendSisterForm, FindForm
@@ -12,10 +14,10 @@ import hashlib
 
 from flask_sqlalchemy import SQLAlchemy
 #from flaskext.mysql import MySQL
-#from dotenv import load_dotenv   #for python-dotenv method                  #for python-dotenv method
-import os
+
 from database_creator import db, setup_db, db_drop_and_create_all
 from dotenv import load_dotenv   #for python-dotenv method
+
 load_dotenv()                    #for python-dotenv method
 
 
@@ -183,11 +185,23 @@ def absoluteTest():
     return render_template("absoluteTest.html", MAP_KEY=MAP_KEY)
 
 
-@app.route('/api/getAddress', methods=['GET'])
+@app.route('/api/getAddress', methods=['GET', 'OPTIONS'])
 def getAddress():
-    tag = request.args.get('tag')
-    if tag:
-        sister= Sister.query.filter_by(description=tag)
-        return jsonify(address= sister.to_dict()),200
+    if request.method == 'OPTIONS':
+        # Set CORS headers for the preflight request
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+        return ('', 204, headers)
     else:
-        return jsonify(response={"Sorry, could not find Sister?"}), 404
+        tag = request.args.get('tag')
+        if tag:
+            sister= Sister.query.filter_by(description=tag).first()
+            if sister:
+                return jsonify(address= sister.to_dict()),200
+            else:
+                return jsonify(response=["Sorry, that Service/Buisness is not available"]), 404
+        else:
+            return jsonify(response=["Sorry, we could not compute your input, please try again"]), 404

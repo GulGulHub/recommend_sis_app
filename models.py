@@ -52,8 +52,8 @@ class Sister(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @classmethod
-    def get_by_id(cls, user_id):
-        return cls.query.filter_by(id=userid).first()
+    def get_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
     
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
