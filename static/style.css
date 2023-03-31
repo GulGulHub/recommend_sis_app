@@ -22,16 +22,35 @@ border-bottom-right-radius: .3rem;
 }
 
 html,
-body,
-{
+body {
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
+  font-family: 'DatalegreyaGradient';
+  font-weight: bold;
+  font-style: normal;
+}
+
+#header-size {
+  font-size: 5em;
+}
+
+#side-block {
+  background: linear-gradient(to bottom, #7d12ff, #ab20fd) !important;
 }
 
 #container {
-  padding: 20pt;
+  padding: 2em 3em 3em 3em;
+  font-family: 'Gill Sans';
+
+  
+}
+
+#font-color-form {
+  background: -webkit-linear-gradient( #7d12ff,#200589);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #mamaDiv {
@@ -47,25 +66,3 @@ body,
 }
 
 
-
-
-/* this settting was working
-
-    #viewDiv {
-        position: relative;
-        height: 100vh; /*
-        width: 100%;
-
-      }
-
-     #map {
-        position: relative;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 14px;
-        color: #323232;
-      }
-      */

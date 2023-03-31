@@ -1,55 +1,53 @@
-{% extends "layout.html" %}
-{% block head %}
-<title>Welcome To Recommend A Sista</title>
-<link href="static/style.css" rel="stylesheet">
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block side %}
- <nav class="nav flex-column ">
-                <a aria-current="page" class="nav-link active text-white" href="#">What is recommend a Sist*a ?</a>
-                <a class="nav-link text-white" href="#">Who and why Sist*A ?</a>
-                <a class="nav-link text-white" href="#"> Sign UP or get in touch</a>
-            </nav>
-{% endblock %}
-{% block col %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Recommend A Sista</title>
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/datalegreya" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesindex.css') }}" />
+</head>
 
+<body>
 
-
-<div class="row d-flex justify-content-center align-items-center h-100">
-    <div class="col-xl-10">
-        <div class="card rounded-3 text-black">
-            <div class="row g-0">
-                <div class="col-lg-6">
-                    <div class="card-body p-md-5 mx-md-4">
-
-                        <div class="text-center">
-                            <h4 class="mt-1 mb-5 pb-1">Welcome to Recommend a Sist*A </h4>
-                            <a class="btn dark" href="{{url_for('login')}}"> Log In </a>
-                            <a class="btn dark" href="{{url_for('register')}}"> Register </a>
-                            <a class="btn dark" href="{{url_for('find')}}"> find </a>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex align-items-center">
-                    <div class=" px-3 py-4 p-md-5 mx-md-4">
-                        <h4 class="mb-4">Why this App??? </h4>
-                        <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                            eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    </div>
-                </div>
-            </div>
+    <header id="item-1">
+        <div>
+            <h1>Recommend a Sist*A</h1>
         </div>
+
+    </header>
+
+    <div class="container">
+
+        <aside id="item-2">
+            <h2>Find and Recommend Buisnesses and Services of BIPoC and Migrant Women* in Berlin. <br> <br> An App for BIPoC and Migrant Women* in Berlin </h2>
+        
+
+            <ul id="buttons">
+                <li><a class="button1" href="{{url_for('login')}}"> Log In </a></li>
+                <li><a class="button1" href="{{url_for('register')}}"> Register </a></li>
+                <li><a class="button1" href="{{url_for('find')}}"> find out more. </a></li>
+            </ul>
+
+
+        </aside>
+
+        <main id="item-3">
+           <img src="{{ url_for('static', filename='groupVector.png') }}" alt="">
+           <a href="https://www.freepik.com/free-vector/senior-women-portrait-character-female_28157757.htm#query=women%20diversity%20professional&position=28&from_view=search&track=ais">Image by gstudioimagen1  on Freepik </a>
+           Image by <a href="https://www.freepik.com/free-vector/colorful-women-s-day-pattern-with-women-faces_6591751.htm#query=abstract%20women%20diversity&position=20&from_view=search&track=ais">Freepik</a>
+           <a href="https://www.freepik.com/free-vector/group-strong-women-vector_3439240.htm#query=abstract%20women%20diversity&position=2&from_view=search&track=ais">Image by rawpixel.com</a> on Freepik
+            
+
+
+        </main>
+
     </div>
-</div>
 
 
-{% endblock %}
-{% block body %}
 
+</body>
 
-{% endblock %}
+</html>

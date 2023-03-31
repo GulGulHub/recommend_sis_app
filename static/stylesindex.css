@@ -1,0 +1,86 @@
+:root {
+  --violet: linear-gradient(to right, #200589, #7d12ff,#ab20fd);
+  --white: #ffffff;
+}
+
+body {
+  background: var(--violet);
+  font-family: 'DatalegreyaGradient';
+  font-weight: bold;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color:white;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+  width: 100%;
+}
+
+h1 {
+  font-size: 7em;
+  font-weight: 200;
+  text-align: center;
+  
+}
+
+.container {
+  display: flex;
+  height: 70%;
+  width: 100%;
+}
+
+aside {
+  display: flex;
+  flex-direction: column; /* set the flex direction to column */
+  width: 50%;
+  height: 70%;
+  font-size: 1.5em;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+#buttons li {
+  list-style: none;
+  margin: 0.6em;
+  font-size: 1.3em;
+  line-height: 60px;
+}
+
+.button1 {
+  background-color: var(--violet);
+  color: white;
+  margin: 80px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50%;
+  height: 100%;
+  width: 100%;
+}
+
+img {
+  margin-top: 0em;;
+  width:35em;
+  height:35em;
+  background-color: transparent;
+  margin-bottom: 0em;
+}
+
+
+@media screen and (max-width:720px) {
+  /* Zusätzliche Regeln für kleinere Monitore  */
+     body { color: #000; }
+  }
+  
+  @media screen and (max-width:450px) {
+     /* Zusätzliche Regeln noch kleinere Monitore  */
+     body { line-height: 1.2} 
+  }

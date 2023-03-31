@@ -15,8 +15,8 @@
     <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
+            <fieldset class="form-group" id="font-color-form" >
+                <legend class="border-bottom mb-4" id="font-color-form">Join Today</legend>
                 <div class="form-group">
                     {{ form.fullname.label(class="form-control-label") }}
                     {% if form.fullname.errors %}
@@ -85,7 +85,7 @@
                 </div>
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class='btn btn-outline-info')}}
+                {{ form.submit(class='btn btn-outline-dark')}}
             </div>
         </form>
     </div>

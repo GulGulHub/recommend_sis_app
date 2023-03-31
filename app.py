@@ -24,6 +24,7 @@ load_dotenv()                    #for python-dotenv method
 
 
 app = Flask(__name__)
+app.static_folder = 'static'
 with app.app_context():
     setup_db(app)
     db_drop_and_create_all()
