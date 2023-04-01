@@ -26,11 +26,13 @@ function getValue() {
 
 function testTry() {
   const tag = document.getElementById("search-tag").value;
-  fetch(`/api/getAddress?tag=${tag}`, {mode:"cors", credentials: "include"})
+  fetch(`/api/getAddress?tag=${tag}`, {mode:"cors"})
     .then(response => response.json())
     .then(data => {  console.log(data); document.getElementById('Test_JS').innerText = data.address; })
     .catch(err => console.error(err));
 }
+
+
 
 
 

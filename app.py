@@ -32,7 +32,7 @@ with app.app_context():
 
 
 
-MAP_KEY = os.environ.get('MAP_API_KEY', "MAP_API_Key is not loading?")
+MAP_KEY = os.getenv('MAP_API_KEY', "MAP_API_Key is not loading?")
 
 
 
@@ -116,7 +116,7 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/find', methods=['GET', 'POST'])
+""" @app.route('/find', methods=['GET', 'POST'])
 #@login_required()
 def find():
     form = FindForm()
@@ -129,7 +129,7 @@ def find():
         else:
             flash("no recommendation with that name found")
     return render_template("find.html", MAP_KEY=MAP_KEY, form=form)
-
+ """
 @app.route('/reverseFind', methods=['GET'])
 #@login_required()
 def reverseFind():
@@ -163,9 +163,9 @@ def show_all():
     all_sisters = Sister.query.all()
     return render_template("all.html", all_sisters = all_sisters)
 
-@app.route('/testfind', methods=['GET', 'POST'])
+@app.route('/find', methods=['GET', 'POST'])
 #@login_required()
-def testfind():
+def find():
     form = FindForm()
     if form.validate_on_submit():
         search = form.search_description.data,
@@ -175,18 +175,14 @@ def testfind():
             sis_list=[]
             for item in find_query:
                 sis_list.append(item.address)                
-            return render_template("testfind.html", MAP_KEY=MAP_KEY, form= form, findData=find_query, db_address=sis_list)
+            return render_template("find.html", MAP_KEY=MAP_KEY, form= form, findData=find_query, db_address=sis_list)
         else:
             flash("no recommendation with that name found")
-    return render_template("testfind.html", MAP_KEY=MAP_KEY, form=form)
-
-@app.route('/absoluteTest', methods=['GET','POST'])
-#@login_required
-def absoluteTest():
-    return render_template("absoluteTest.html", MAP_KEY=MAP_KEY)
+    return render_template("find.html", MAP_KEY=MAP_KEY, form=form)
 
 
-@app.route('/api/getAddress', methods=['GET', 'OPTIONS'])
+
+""" @app.route('/api/getAddress', methods=['GET', 'OPTIONS'])
 def getAddress():
     if request.method == 'OPTIONS':
         # Set CORS headers for the preflight request
@@ -205,4 +201,17 @@ def getAddress():
             else:
                 return jsonify(response=["Sorry, that Service/Buisness is not available"]), 404
         else:
-            return jsonify(response=["Sorry, we could not compute your input, please try again"]), 404
+            return jsonify(response=["Sorry, we could not compute your input, please try again"]), 404 """
+
+
+@app.route('/api/getAddress', methods=['GET'])
+def getAddress():
+    tag = request.args.get('tag')
+    if tag:
+        sister = Sister.query.filter_by(description=tag).first()
+        if sister:
+            return jsonify(address=sister.to_dict()), 200
+        else:
+            return jsonify(response=["Sorry, that Service/Buisness is not available"]), 404
+    else:
+        return jsonify(response=["Sorry, we could not compute your input, please try again"]), 404
