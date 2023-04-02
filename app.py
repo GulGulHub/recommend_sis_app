@@ -13,7 +13,7 @@ from sqlalchemy.exc import IntegrityError
 import hashlib
 
 from flask_sqlalchemy import SQLAlchemy
-#from flaskext.mysql import MySQL
+from flaskext.mysql import MySQL
 
 from database_creator import db, setup_db, db_drop_and_create_all
 from dotenv import load_dotenv   #for python-dotenv method
