@@ -10,16 +10,14 @@
     "esri/config",
     "esri/Map",
     "esri/views/MapView",
-
     "esri/Graphic",
     "esri/layers/GraphicsLayer",
-
     "esri/rest/locator",
 
-  ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer) {
+  ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
 
     esriConfig.apiKey = "{{MAP_KEY}}";
-    initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer)
+    initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator)
 
 
   });</script>
@@ -51,7 +49,7 @@
 {% block col %}
 
 <div id="form-style">
-  <form method="POST" action="" class="form-inline my-2 my-lg-0" onsubmit="testTry()">
+  <form method="POST" action="" class="form-inline my-2 my-lg-0" onsubmit="searchAddressSubmit(event)">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4"> Search for a recommendation </legend>

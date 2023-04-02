@@ -34,6 +34,7 @@ def setup_db(app):
 '''
 
 def db_drop_and_create_all():
-    db.drop_all()
-    db.create_all()
+    pass
+    #db.drop_all()
+    #db.create_all()
 

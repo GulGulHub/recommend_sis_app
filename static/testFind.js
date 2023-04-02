@@ -1,19 +1,27 @@
+let cGraphic;
+let graphicsLayer;
+let view;
+let search_address;
 
-function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer) {
+
+function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
   console.log('InitMap')
+
+  cGraphic = Graphic
+  esriLocator = locator
 
   const map = new Map({
     basemap: "arcgis-topographic" //Basemap layer service
   });
 
-  const view = new MapView({
+  view = new MapView({
     map: map,
     center: [13.4050, 52.5200], //Longitude, latitude
     zoom: 13,
     container: "viewDiv"
   });
 
-  const graphicsLayer = new GraphicsLayer();
+  graphicsLayer = new GraphicsLayer();
   map.add(graphicsLayer);
 
 }
@@ -24,61 +32,66 @@ function getValue() {
 }
 
 
-function testTry() {
-  const tag = document.getElementById("search-tag").value;
-  fetch(`/api/getAddress?tag=${tag}`, {mode:"cors"})
+function testTry(e) {
+    e.preventDefault();
+    const tag = document.getElementById("search-tag").value;
+    fetch(`/api/getAddress?tag=${tag}`, {mode:"cors"})
     .then(response => response.json())
-    .then(data => {  console.log(data); document.getElementById('Test_JS').innerText = data.address; })
+    .then(data => {  console.log(data); document.getElementById('Test_JS').innerText = data.address.address; })
     .catch(err => console.error(err));
 }
 
 
 
 
+function searchAddressSubmit(e) {
+  e.preventDefault();
 
-function searchAddressSubmit() {
+  console.log("searchAddressSubmit");
 
-  console.log('searchAddressSubmit');
+  const tag = document.getElementById("search-tag").value;
 
-  fetch('/api/getAddress', {
-    method: 'GET',
-    headers: {
-      tag: document.getElementById("search-tag").value,
-    }
-  })
-    .then(response => response.json())
-    .then(data => {let search_address = data.address})
-    .catch(err => console.error(err));
+  let search_address;
 
+  fetch(`/api/getAddress?tag=${tag}`, { mode: "cors" })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      document.getElementById("Test_JS").innerText = data.address.address;
+      search_address = data.address.address;
+      const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 
+      const params = {
+        address: {
+          address: search_address,
+        },
+      };
 
-  const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+      let firstResult;
 
-  const params = {
-    address: {
-      "address": search_address
-    }
-  }
+      esriLocator.addressToLocations(geocodingServiceUrl, params).then((results) => {
+        if (results) {
+          console.log("got result");
+          firstResult = results[0];
+          console.log(firstResult);
+          console.log(firstResult.address);
 
-  esriLocator.addressToLocations(geocodingServiceUrl, params).then((results) => {
-    if (results.length) {
-      let firstResult = results[0];
-      console.log(firstResult.location);
+          view.goTo({
+            target: firstResult.location,
+            zoom: 13,
+          });
 
-      view.goTo({
-        target: firstResult.location,
-        zoom: 13
+          placePoint = firstResult.location;
+          placeInMap(placePoint);
+        } else {
+          console.log("Geocode was not successful");
+          // If you want to provide feedback to the user on the map page:
+          //document.getElementById('addressHelpBlock').innerHTML="Sorry! That search did not work, try again!";
+        }
       });
+    })
+    .catch((err) => console.error(err));
 
-      placeInMap(firstResult);
-    }
-
-    else {
-      console.log("Geocode was not successful");
-      // If you want to provide feedback to the user on the map page:
-      //document.getElementById('addressHelpBlock').innerHTML="Sorry! That search did not work, try again!";
-    }
-  });
   //prevent refresh
   return false;
 }
@@ -87,8 +100,8 @@ function searchAddressSubmit() {
 function placeInMap(place) {
   const point = { //Create a point
     type: "point",
-    longitude: place.lng,
-    latitude: place.lat
+    longitude: place.longitude,
+    latitude: place.latitude
   };
   const simpleMarkerSymbol = {
     type: "simple-marker",
@@ -100,7 +113,7 @@ function placeInMap(place) {
     }
   };
 
-  const pointGraphic = new Graphic({
+  const pointGraphic = new cGraphic({
     geometry: point,
     symbol: simpleMarkerSymbol
   });
