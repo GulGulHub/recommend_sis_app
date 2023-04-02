@@ -57,8 +57,8 @@ function searchAddressSubmit(e) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      document.getElementById("Test_JS").innerText = data.address.address;
-      search_address = data.address.address;
+      document.getElementById("Test_JS").innerText = data.sister.fullname + data.sister.address;
+      search_address = data.sister.address;
       const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 
       const params = {

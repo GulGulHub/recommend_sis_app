@@ -130,10 +130,10 @@ def find():
             flash("no recommendation with that name found")
     return render_template("find.html", MAP_KEY=MAP_KEY, form=form)
  """
-@app.route('/reverseFind', methods=['GET'])
-#@login_required()
-def reverseFind():
-    return render_template("reverseFind.html", MAP_KEY=MAP_KEY)
+# @app.route('/reverseFind', methods=['GET'])
+# #@login_required()
+# def reverseFind():
+#     return render_template("reverseFind.html", MAP_KEY=MAP_KEY)
 
 @app.route("/recommend", methods=['GET', 'POST'])
 #@login_required()
@@ -210,7 +210,7 @@ def getAddress():
     if tag:
         sister = Sister.query.filter_by(description=tag).first()
         if sister:
-            return jsonify(address=sister.to_dict()), 200
+            return jsonify(sister=sister.to_dict()), 200
         else:
             return jsonify(response=["Sorry, that Service/Buisness is not available"]), 404
     else:
