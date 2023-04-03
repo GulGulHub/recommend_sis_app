@@ -115,7 +115,7 @@ class RecommendSisterForm(FlaskForm):
 class FindForm(FlaskForm):
 
     search_description = StringField(
-        'Search for Service or Buisness "Massage"',
+        'Search for Service or Buisness. See choices above',
         validators=
         [DataRequired(),
          Length(min=2, max=200)

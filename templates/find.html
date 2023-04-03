@@ -27,6 +27,9 @@
 
 {% endblock head%}
 
+
+
+
 {% block side %}
 
 <ul class="nav nav-pills flex-column">
@@ -48,6 +51,11 @@
 
 {% block col %}
 
+<div> available choices 
+<div id="choices">
+</div>
+</div>
+
 <div id="form-style">
   <form method="POST" action="" class="form-inline my-2 my-lg-0" onsubmit="searchAddressSubmit(event)">
     {{ form.hidden_tag() }}
@@ -65,23 +73,6 @@
 </div>
 
 
-<table id="myTable">
-
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Contact info</th>
-    <th>Address</th>
-  </tr>
-  {% for sister in findData %}
-  <tr>
-    <td>{{sister.fullname}}</td>
-    <td>{{sister.description}}</td>
-    <td>{{sister.contact}}</td>
-    <td class="search_address">{{sister.address}}</td>
-  </tr>
-  {% endfor %}
-</table>
 
 <div id="Test_JS">
   test:

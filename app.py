@@ -116,25 +116,6 @@ def home():
     return render_template('home.html')
 
 
-""" @app.route('/find', methods=['GET', 'POST'])
-#@login_required()
-def find():
-    form = FindForm()
-    if form.validate_on_submit():
-        search = form.search_description.data,
-        find_query = Sister.query.filter_by(description=form.search_description.data).all()
-        if find_query:
-            flash(f"Yes, ,it worked!!!")
-            return render_template("find.html", MAP_KEY=MAP_KEY, form= form, findData=find_query)
-        else:
-            flash("no recommendation with that name found")
-    return render_template("find.html", MAP_KEY=MAP_KEY, form=form)
- """
-# @app.route('/reverseFind', methods=['GET'])
-# #@login_required()
-# def reverseFind():
-#     return render_template("reverseFind.html", MAP_KEY=MAP_KEY)
-
 @app.route("/recommend", methods=['GET', 'POST'])
 #@login_required()
 def recommend():
@@ -181,29 +162,6 @@ def find():
     return render_template("find.html", MAP_KEY=MAP_KEY, form=form)
 
 
-
-""" @app.route('/api/getAddress', methods=['GET', 'OPTIONS'])
-def getAddress():
-    if request.method == 'OPTIONS':
-        # Set CORS headers for the preflight request
-        headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET',
-            'Access-Control-Allow-Headers': 'Content-Type'
-        }
-        return ('', 204, headers)
-    else:
-        tag = request.args.get('tag')
-        if tag:
-            sister= Sister.query.filter_by(description=tag).first()
-            if sister:
-                return jsonify(address= sister.to_dict()),200
-            else:
-                return jsonify(response=["Sorry, that Service/Buisness is not available"]), 404
-        else:
-            return jsonify(response=["Sorry, we could not compute your input, please try again"]), 404 """
-
-
 @app.route('/api/getAddress', methods=['GET'])
 def getAddress():
     tag = request.args.get('tag')
@@ -215,3 +173,14 @@ def getAddress():
             return jsonify(response=["Sorry, that Service/Buisness is not available"]), 404
     else:
         return jsonify(response=["Sorry, we could not compute your input, please try again"]), 404
+    
+
+
+@app.route('/api/getAll', methods=['GET'])
+def get_all():
+    sisters = Sister.query.all()
+    if sisters:
+        return jsonify(sisters=[sis.to_dict() for sis in sisters]), 200
+    else:
+        return jsonify(response=["Sorry, no Sisters in Database"]), 404
+   

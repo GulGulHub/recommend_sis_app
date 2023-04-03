@@ -4,6 +4,49 @@ let view;
 let search_address;
 
 
+
+function createChoices() {
+  fetch(`/api/getAll`, {mode:"cors"})
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      let all_sisters = data.sisters;
+      let choicesDiv = document.getElementById('choices');
+      for (const sis of all_sisters) {
+        let button = document.createElement('button');
+        button.innerText = sis.description;
+        choicesDiv.appendChild(button);
+      }
+    })
+    .catch(err => console.error(err));
+}
+
+
+/*function createChoices() {
+  fetch(`/api/getAll`, {mode:"cors"})
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      let all_sisters = data.sisters;
+      let choicesDiv = document.getElementById('choices');
+      for (const sis of all_sisters) {
+        let button = document.createElement('button');
+        button.innerText = sis.description;
+        button.addEventListener('click', searchAddressSubmit(event))
+          
+          
+        choicesDiv.appendChild(button);
+      }
+    })
+    .catch(err => console.error(err));
+}
+*/
+
+
+
+
+document.body.onload = createChoices()
+
 function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
   console.log('InitMap')
 
@@ -57,7 +100,7 @@ function searchAddressSubmit(e) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      document.getElementById("Test_JS").innerText = data.sister.fullname + data.sister.address;
+      document.getElementById("Test_JS").innerText = data.sister.fullname + data.sister.address + data.sister.description + data.sister.contact;
       search_address = data.sister.address;
       const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 
