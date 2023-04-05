@@ -30,6 +30,15 @@ body {
   font-family: 'DatalegreyaGradient';
   font-weight: bold;
   font-style: normal;
+
+}
+
+#height-header {
+  height: 30vH;  
+}
+
+#height-main {
+  height: 70vH;  
 }
 
 #header-size {
@@ -40,11 +49,58 @@ body {
   background: linear-gradient(to bottom, #7d12ff, #ab20fd) !important;
 }
 
+#button-color {
+  color: white;
+  font-weight: bold;
+}
+
+#button-color:hover, #button-color:focus, #button-color:active {
+  color: white;
+  background-color: #ab20fd;
+}
+
+
+#button-color-2 {
+  color: white;
+  font-weight: bold;
+}
+
+#button-color-2:hover, #button-color-2:focus, #button-color-2:active {
+  color: white;
+  background-color: #ab20fd;
+}
+
+#button-color-3 {
+  color: white;
+  font-weight: bold;
+}
+
+#button-color-3:hover, #button-color-3:focus, #button-color-3:active {
+  color: white;
+  background-color: #ab20fd;
+}
+
+.btn {
+  border: 5px, solid,  green;
+}
+
+
 #container {
   padding: 2em 3em 3em 3em;
-  font-family: 'Gill Sans';
+  font-family:'Arial';
+  font-weight: lighter;  
+  color: grey;
+}
 
-  
+
+
+#link-1 {
+  color:#7d12ff;
+}
+
+
+#link-2 {
+  color:#7d12ff;
 }
 
 /*#font-color-form {
@@ -67,3 +123,6 @@ body {
 }
 
 
+#text-small {
+  color:  #7d12ff;
+}

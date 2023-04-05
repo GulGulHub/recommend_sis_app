@@ -4,6 +4,15 @@
 <link rel="stylesheet" href="static/style.css">
 {% endblock %}
 
+{% block side %}
+
+<div class="vertical">
+<a id="button-color-2"class="btn btn-outline-light  m-3" href="{{url_for('register')}}"> Register </a>
+<a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
+</div>
+
+{% endblock side %}
+
 
 {% block col %}
 
@@ -17,7 +26,7 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group" id="font-color-form">
-                <legend class="border-bottom mb-4">Login</legend>
+                <legend id=text-login class="border-bottom mb-4">Login</legend>
                 <div class="form-group">
                     {{ form.username.label(class="form-control-label" ) }}
                     {% if form.username.errors %}
@@ -49,17 +58,17 @@
                     {{ form.remember.label(class="form-check-label") }}
                 </div>
                 <small class="text-muted ml-2">
-                    <a href="#">Forgot password?</a>
+                    <a href="#" id="link-1">Forgot password?</a>
                 </small>
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class='btn btn-outline-info')}}
+                {{ form.submit(class='btn btn-outline-dark')}}
             </div>
         </form>
     </div>
     <div class="border-top pt-3">
-        <small class="text-muted">
-            You do not have an account? <a class="ml-2" href="{{ url_for('register')}}">Register</a>
+        <small  id="text-small">
+            You do not have an account? <a id="link-2" class="ml-2" href="{{ url_for('register')}}">Register</a>
         </small>
     </div>
 </div>

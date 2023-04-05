@@ -58,6 +58,7 @@ def load_user(user_id):
 def start():
     return render_template('index.html')
 
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -102,12 +103,19 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
+@app.route('/findOutMore', methods=['GET', 'POST'])
+def more():
+    return render_template('more.html')
+
+
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    flash(f'You have logged out!', 'success')
-    return redirect(url_for('home'))
+    flash(f'!! You have logged out !!', 'success')
+    return redirect(url_for('start'))
+
+
 
 
 @app.route('/home', methods=['GET','POST'])
@@ -117,7 +125,7 @@ def home():
 
 
 @app.route("/recommend", methods=['GET', 'POST'])
-#@login_required()
+@login_required
 def recommend():
     form = RecommendSisterForm()
     if form.validate_on_submit():
@@ -139,13 +147,13 @@ def recommend():
 
 
 @app.route('/all', methods=['GET','POST'])
-#@login_required
+@login_required
 def show_all():
     all_sisters = Sister.query.all()
     return render_template("all.html", all_sisters = all_sisters)
 
 @app.route('/find', methods=['GET', 'POST'])
-#@login_required()
+#@login_required
 def find():
     form = FindForm()
     if form.validate_on_submit():
@@ -166,9 +174,13 @@ def find():
 def getAddress():
     tag = request.args.get('tag')
     if tag:
-        sister = Sister.query.filter_by(description=tag).first()
-        if sister:
-            return jsonify(sister=sister.to_dict()), 200
+        sisters = Sister.query.filter_by(description=tag).all()
+        if sisters:
+            sisters_list = []
+            for sister in sisters:
+                new_sis = sister.to_dict()
+                sisters_list.append(new_sis)
+            return jsonify(sister=sisters_list), 200
         else:
             return jsonify(response=["Sorry, that Service/Buisness is not available"]), 404
     else:

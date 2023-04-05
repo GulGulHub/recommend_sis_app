@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>More about Recommend A Sist*A </title>
+<link rel="stylesheet" href="static/style.css">
+{% endblock %}
+
+{% block side %}
+
+<div class="vertical">
+    <a id="button-color-2"class="btn btn-outline-light  m-3" href="{{url_for('login')}}"> Log In </a>
+<a id="button-color-2"class="btn btn-outline-light  m-3" href="{{url_for('register')}}"> Register </a>
+</div>
+
+{% endblock side %}
+
+{% block col %}
+
+<h1> Find out more about....</h1>
+<h2> who is this app for?</h2>
+<h3> how to register? </h3>
+<h3> how to use this app </h3>
+<h3> how to complain </h3>
+
+{% endblock col %}

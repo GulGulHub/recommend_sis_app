@@ -6,7 +6,7 @@ let search_address;
 
 
 function createChoices() {
-  fetch(`/api/getAll`, {mode:"cors"})
+  fetch(`/api/getAll`, { mode: "cors" })
     .then(response => response.json())
     .then(data => {
       console.log(data);
@@ -71,16 +71,16 @@ function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
 
 function getValue() {
   data = document.getElementById('search-tag').value;
-  console.log('WE GOT',data)
+  console.log('WE GOT', data)
 }
 
 
 function testTry(e) {
-    e.preventDefault();
-    const tag = document.getElementById("search-tag").value;
-    fetch(`/api/getAddress?tag=${tag}`, {mode:"cors"})
+  e.preventDefault();
+  const tag = document.getElementById("search-tag").value;
+  fetch(`/api/getAddress?tag=${tag}`, { mode: "cors" })
     .then(response => response.json())
-    .then(data => {  console.log(data); document.getElementById('Test_JS').innerText = data.address.address; })
+    .then(data => { console.log(data); document.getElementById('Test_JS').innerText = data.address.address; })
     .catch(err => console.error(err));
 }
 
@@ -89,49 +89,57 @@ function testTry(e) {
 
 function searchAddressSubmit(e) {
   e.preventDefault();
+  console.log("!", e.target)
 
   console.log("searchAddressSubmit");
 
   const tag = document.getElementById("search-tag").value;
 
   let search_address;
+  let target_div = document.getElementById("Test_JS");
 
   fetch(`/api/getAddress?tag=${tag}`, { mode: "cors" })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      document.getElementById("Test_JS").innerText = data.sister.fullname + data.sister.address + data.sister.description + data.sister.contact;
-      search_address = data.sister.address;
-      const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+      let all_searches = data.sister
+      for (const search_item of all_searches) {
+        console.log("!!!", search_item)
+        let sis_text = document.createElement("div")
+        sis_text.innerText = search_item.fullname + "," + search_item.address + "," + search_item.description + "," + search_item.contact;
+        target_div.appendChild(sis_text);
+        search_address = search_item.address;
+        const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 
-      const params = {
-        address: {
-          address: search_address,
-        },
-      };
+        const params = {
+          address: {
+            address: search_address,
+          },
+        };
 
-      let firstResult;
+        let firstResult;
 
-      esriLocator.addressToLocations(geocodingServiceUrl, params).then((results) => {
-        if (results) {
-          console.log("got result");
-          firstResult = results[0];
-          console.log(firstResult);
-          console.log(firstResult.address);
+        esriLocator.addressToLocations(geocodingServiceUrl, params).then((results) => {
+          if (results) {
+            console.log("got result");
+            firstResult = results[0];
+            console.log(firstResult);
+            console.log(firstResult.address);
 
-          view.goTo({
-            target: firstResult.location,
-            zoom: 13,
-          });
+            view.goTo({
+              target: firstResult.location,
+              zoom: 12,
+            });
 
-          placePoint = firstResult.location;
-          placeInMap(placePoint);
-        } else {
-          console.log("Geocode was not successful");
-          // If you want to provide feedback to the user on the map page:
-          //document.getElementById('addressHelpBlock').innerHTML="Sorry! That search did not work, try again!";
-        }
-      });
+            placePoint = firstResult.location;
+            placeInMap(placePoint);
+          } else {
+            console.log("Geocode was not successful");
+            // If you want to provide feedback to the user on the map page:
+            //document.getElementById('addressHelpBlock').innerHTML="Sorry! That search did not work, try again!";
+          }
+        });
+      }
     })
     .catch((err) => console.error(err));
 
@@ -149,20 +157,31 @@ function placeInMap(place) {
   const simpleMarkerSymbol = {
     type: "simple-marker",
     style: "diamond",
-    color: [226, 119, 40],  // Orange
+    color: [255, 105, 180],  // Hotpink
     outline: {
       color: [255, 255, 255], // White
-      width: 1
+      width: 3
     }
   };
 
   const pointGraphic = new cGraphic({
     geometry: point,
-    symbol: simpleMarkerSymbol
+    symbol: simpleMarkerSymbol,
+    popupTemplate: {
+      title: "This is the title",
+      content: "Here we could put more information about this item",
+      actions: [{
+        title: "View Details",
+        id: "view",
+        param: 1 // this is an additional attribute I added to be able to know the item id and costruct the detail page url on click
+      }]
+    }
   });
+
   graphicsLayer.add(pointGraphic);
 
   return pointGraphic;
+
 };
 
 

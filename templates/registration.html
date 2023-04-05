@@ -5,6 +5,15 @@
 <link rel="stylesheet" href="static/style.css">
 {% endblock %}
 
+{% block side %}
+
+<div class="vertical">
+<a id="button-color" class="btn btn-outline-light m-3" href="{{url_for('login')}}"> Log In </a>
+<a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
+</div>
+
+{% endblock side %}
+
 {% block col %}
 <div id="container">
     {% for field, errors in form.errors.items() %}
@@ -84,7 +93,7 @@
                     {% endif %}
                 </div>
             </fieldset>
-            <div class="form-group">
+            <div class="form-group" id="btn-submit">
                 {{ form.submit(class='btn btn-outline-dark')}}
             </div>
         </form>

@@ -12,13 +12,21 @@ body {
   flex-direction: column;
   height: 100vh;
   color:white;
+
+}
+
+.alert {
+  font-size: 2em;
+  text-align: center;
+  color:#000;
+  background-color: red;
 }
 
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30%;
+  height: 30vH;
   width: 100%;
 }
 
@@ -31,7 +39,7 @@ h1 {
 
 .container {
   display: flex;
-  height: 70%;
+  height: 70vH;
   width: 100%;
 }
 
@@ -69,18 +77,136 @@ main {
 img {
   margin-top: 0em;;
   width:35em;
-  height:35em;
+  height:30em;
   background-color: transparent;
   margin-bottom: 0em;
 }
 
 
-@media screen and (max-width:720px) {
-  /* Zusätzliche Regeln für kleinere Monitore  */
-     body { color: #000; }
-  }
-  
+
+
+  @media screen and (max-width:720px) {
+    /* Zusätzliche Regeln für kleinere Monitore  */
+       body { color: #000; }
+
+       h1 {
+        font-size: 7em;
+        font-weight: 200;
+        text-align: center;
+        
+      }
+
+      .container {
+        display: block;
+        height: 70vH;
+      }
+
+      aside {
+        display: block;
+        height: 20vH;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+      }
+
+      main {
+        display: block;
+        height: 20vH;
+        padding-top: 0px;
+        margin-top: 0px;
+      }
+
+      ul {
+        padding: 0%;
+        margin: 0%;
+      }
+
+      #buttons li {
+        float: left;
+        padding: 0px;
+        margin: 0px;
+        font-size: 0.9em;
+      }
+
+      .button1 {
+        display: block;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        padding: 0.5em;
+        margin: 0.5em;
+      }
+
+       aside {
+        display:block;
+        width: 100%;
+       }
+    }
+    
   @media screen and (max-width:450px) {
-     /* Zusätzliche Regeln noch kleinere Monitore  */
-     body { line-height: 1.2} 
-  }
+       /* Zusätzliche Regeln noch kleinere Monitore  */
+       body { color: white;} 
+
+       h1 {
+        font-size: 3.7em;
+        font-weight: 200;
+        text-align: center;
+        
+      }
+
+      .container {
+        display: block;
+        height: 70vH;
+        margin-left:0px;
+      }
+
+      aside {
+        display: block;
+        height: 20vH;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        margin-left: 0px;
+      }
+
+      h2 {
+        font-size: 1em;
+        margin-left: 0px;
+      }
+
+      main {
+        display: block;
+        height: 20vH;
+        padding-top: 0px;
+        margin-top: 0px;
+      }
+
+      ul {
+        padding: 0%;
+        margin: 0%;
+      }
+
+      #buttons li {
+        float: left;
+        padding: 0px;
+        margin: 0px;
+        font-size: 0.7em;
+      }
+
+      .button1 {
+        display: block;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        padding: 0.5em;
+        margin: 0.5em;
+      }
+
+       aside {
+        display:block;
+        width: 100%;
+       }
+    }
+
+    img {
+      width: 20em;
+      height: 20em;
+    }
