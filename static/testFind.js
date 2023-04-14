@@ -3,10 +3,10 @@ let graphicsLayer;
 let view;
 let search_address;
 
-
+/* creating choices for the buttons from all the sisters in the database*/
 
 function createChoices() {
-  fetch(`/api/getAll`, { mode: "cors" })
+  fetch(`/api/getAll`, { mode: "cors" })  
     .then(response => response.json())
     .then(data => {
       console.log(data);
@@ -15,37 +15,18 @@ function createChoices() {
       for (const sis of all_sisters) {
         let button = document.createElement('button');
         button.innerText = sis.description;
+        button.value = sis.description;
+        button.onclick = onClickValue;
         choicesDiv.appendChild(button);
       }
     })
     .catch(err => console.error(err));
 }
-
-
-/*function createChoices() {
-  fetch(`/api/getAll`, {mode:"cors"})
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      let all_sisters = data.sisters;
-      let choicesDiv = document.getElementById('choices');
-      for (const sis of all_sisters) {
-        let button = document.createElement('button');
-        button.innerText = sis.description;
-        button.addEventListener('click', searchAddressSubmit(event))
-          
-          
-        choicesDiv.appendChild(button);
-      }
-    })
-    .catch(err => console.error(err));
-}
-*/
-
-
 
 
 document.body.onload = createChoices()
+
+/* initialize the Map from Esri */
 
 function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
   console.log('InitMap')
@@ -69,31 +50,31 @@ function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
 
 }
 
+/* 
+
 function getValue() {
   data = document.getElementById('search-tag').value;
   console.log('WE GOT', data)
 }
+ */
 
 
-function testTry(e) {
-  e.preventDefault();
-  const tag = document.getElementById("search-tag").value;
-  fetch(`/api/getAddress?tag=${tag}`, { mode: "cors" })
-    .then(response => response.json())
-    .then(data => { console.log(data); document.getElementById('Test_JS').innerText = data.address.address; })
-    .catch(err => console.error(err));
-}
-
+/* function onClickValue(){
+  const tag = this.value;
+  alert(tag)
+} */
+ 
 
 
 
-function searchAddressSubmit(e) {
-  e.preventDefault();
-  console.log("!", e.target)
+
+
+function onClickValue(){
+  const tag = this.value;
+  console.log(tag);
+
 
   console.log("searchAddressSubmit");
-
-  const tag = document.getElementById("search-tag").value;
 
   let search_address;
   let target_div = document.getElementById("Test_JS");
@@ -103,10 +84,14 @@ function searchAddressSubmit(e) {
     .then((data) => {
       console.log(data);
       let all_searches = data.sister
+      let header_text = document.createElement("h3")
+      header_text.innerText = "Your Results: "
+      target_div.appendChild(header_text)
       for (const search_item of all_searches) {
         console.log("!!!", search_item)
         let sis_text = document.createElement("div")
         sis_text.innerText = search_item.fullname + "," + search_item.address + "," + search_item.description + "," + search_item.contact;
+        sis_text.setAttribute("id","sis_text")
         target_div.appendChild(sis_text);
         search_address = search_item.address;
         const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";

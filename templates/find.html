@@ -32,60 +32,51 @@
 
 {% block side %}
 
-<ul class="nav nav-pills flex-column">
-  <li class="nav-item">
-    <a class="nav-link text-dark" aria-current="page" href="{{url_for('find')}}">Find</a>
+<ul>
+  <li>
+    <a href="{{url_for('find')}}"><button type="button" class="sideButtons">Recommend A Sist*A</button></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-dark" href="{{url_for('recommend')}}">Recommend</a>
+  <li >
+    <a href="{{url_for('recommend')}}"><button type="button" class="sideButtons">Home</button></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-dark" href="{{url_for('show_all')}}">See All</a>
+  <li >
+    <a href="{{url_for('show_all')}}"><button type="button" class="sideButtons">find out more</button></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-dark" href="#"> Create Profile </a>
+  <li>
+    <a href="{{url_for('show_all')}}"><button type="button" class="sideButtons" >logout</button></a>
   </li>
 </ul>
+
+
+
 
 {% endblock side %}
 
 {% block col %}
 
-<div> available choices 
-<div id="choices">
-</div>
+<div> 
+  <h2>Available Businesses and Services</h2>
+  <div id="choices">
+  </div>
 </div>
 
-<div id="form-style">
-  <form method="POST" action="" class="form-inline my-2 my-lg-0" onsubmit="searchAddressSubmit(event)">
-    {{ form.hidden_tag() }}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4"> Search for a recommendation </legend>
-      <div class="form-group">
-        {{ form.search_description.label(class="form-control-label") }}
-        {{ form.search_description(class="form-control form-control-lg", id="search-tag") }}
-      </div>
-    </fieldset>
-    <div class="form-group">
-      {{ form.submit(class='btn btn-outline-info')}}
-    </div>
-  </form>
-</div>
+
 
 
 
 <div id="Test_JS">
-  test:
 </div>
 
-</div>
-</div>
-
-
-
-<div>
+<div id="map-wrapper">
   <div id="viewDiv"></div>
 </div>
+
+</div>
+</div>
+
+
+
+
 
 
 {% endblock col%}
