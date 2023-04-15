@@ -130,18 +130,31 @@ def recommend():
     form = RecommendSisterForm()
     if form.validate_on_submit():
         sister = Sister(
-            fullname = form.fullname.data,
-            description = form.description.data,
-            contact = form.contact.data,
-            address = form.address.data,
-        )
+        fullname = form.fullname.data,
+        description = form.description.data,
+        contact = form.contact.data,
+        address = form.address.data,
+    )
+        if form.new_description.data:
+            sister.description = form.new_description.data
+        
         try:
             sister.insert()
-            flash(f'Thank you for you recommendation.{form.fullname.data} has been added! ')
+            flash(f'Thank you for your recommendation. {form.fullname.data} has been added!')
+        
         except IntegrityError as e:
-            flash(f'Could not register! The entered username or email might be already taken', 'danger')
+            flash(f'Could not register! The entered username or email might already be taken', 'danger')
             print('IntegrityError when trying to store new user')
         return redirect(url_for('recommend'))
+
+    else:
+        sisters = Sister.query.with_entities(Sister.description).all()
+        if sisters:
+        # Extract descriptions from the list of tuples
+            double_descriptions = [sister[0] for sister in sisters]
+        # Remove duplicates from the list
+            descriptions = sorted(list(set(double_descriptions)))
+            return render_template("recommend.html", form=form, sisters=descriptions)
     return render_template("recommend.html", form=form)
 
 
@@ -193,6 +206,19 @@ def get_all():
     sisters = Sister.query.all()
     if sisters:
         return jsonify(sisters=[sis.to_dict() for sis in sisters]), 200
+    else:
+        return jsonify(response=["Sorry, no Sisters in Database"]), 404
+
+
+@app.route('/api/getDescriptions', methods=['GET'])
+def get_description():
+    sisters = Sister.query.with_entities(Sister.description).all()
+    if sisters:
+        # Extract descriptions from the list of tuples
+        double_descriptions = [sister[0] for sister in sisters]
+        # Remove duplicates from the list
+        descriptions = sorted(list(set(double_descriptions)))
+        return jsonify(sisters=descriptions), 200
     else:
         return jsonify(response=["Sorry, no Sisters in Database"]), 404
    

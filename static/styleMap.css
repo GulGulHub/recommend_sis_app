@@ -53,11 +53,12 @@ ul {
   background-color: #7d12ff;
   color: white;
   font-size: 0.7em ;
-  padding: 0.2em;
   margin: 0,2em;
   border-radius: 8px;
   font-family: 'DatalegreyaGradient';
   font-weight: bold;
+  padding: 10px;
+  width: calc(100% - 20px);
 
 }
 
@@ -67,12 +68,16 @@ button {
   background-color: white;
   color: #7d12ff;
   font-size: 1.1em ;
-  padding: 0.2em;
   margin: 0.5em;
   border-radius: 8px;
   font-family: 'DatalegreyaGradient';
   font-weight: bold;
+  cursor: pointer;
+  padding: 3px;
+  width: calc(30% - 6px);
 }
+
+
 
 
 main {

@@ -1,4 +1,4 @@
-from wtforms import StringField, SubmitField, HiddenField, PasswordField, BooleanField
+from wtforms import StringField, SubmitField, HiddenField, PasswordField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_wtf import FlaskForm
 
@@ -74,12 +74,28 @@ class RecommendSisterForm(FlaskForm):
          ]
     )
 
-    description = StringField(
-        'Tag / Service / Buisness-Type',
-        validators=
-        [DataRequired(),
-         Length(min=2, max=20)
-         ]
+    ############ go back to here ###############
+
+    # description = StringField(
+    #     'Tag / Service / Buisness-Type',
+    #     validators=
+    #     [DataRequired(),
+    #      Length(min=2, max=20)
+    #      ]
+    # )
+
+    ##### go back to here #################
+
+    description = SelectField(
+        'Tag / Service / Business-Type',
+        choices=[('', 'Select an existing option')]  # Empty option for dropdown
+    )
+
+    new_description = StringField(
+        'New-Tag / Service / Business-Type',
+        validators=[
+            Length(min=2, max=20)
+        ]
     )
 
     contact = StringField(
@@ -100,17 +116,18 @@ class RecommendSisterForm(FlaskForm):
 
     submit = SubmitField('Recommend')
 
+    # def validate(self, field):
+    #     if not FlaskForm.validate(self):
+    #         return False
+    #     if field.description.data and field.new_description.data:
+    #         field.description.errors.append('Please select an existing option or enter a new one.')
+    #         field.new_description.errors.append('Please select an existing option or enter a new one.')
+    #         return False
 
-# class NewLocationForm(FlaskForm):
-#     description = StringField('Location description',
-#                            validators=[DataRequired(), Length(min=1, max=80)])
-#     lookup_address = StringField('Search address')
-#
-#     coord_latitude = HiddenField('Latitude',validators=[DataRequired()])
-#
-#     coord_longitude = HiddenField('Longitude', validators=[DataRequired()])
-#
-#     submit = SubmitField('Create Location')
+    #     return True
+
+
+
 
 class FindForm(FlaskForm):
 

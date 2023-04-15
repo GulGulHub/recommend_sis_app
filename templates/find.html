@@ -1,6 +1,5 @@
 {% extends "layoutMap.html" %}
 {% block head %}
-<title>TEST_FIND </title>
 <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/datalegreya" type="text/css" />
 <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
 <script src="https://js.arcgis.com/4.26/"></script>
@@ -34,16 +33,16 @@
 
 <ul>
   <li>
-    <a href="{{url_for('find')}}"><button type="button" class="sideButtons">Recommend A Sist*A</button></a>
+    <a href="{{url_for('recommend')}}"><button type="button" class="sideButtons">Recommend A Sist*A</button></a>
   </li>
   <li >
-    <a href="{{url_for('recommend')}}"><button type="button" class="sideButtons">Home</button></a>
+    <a href="{{url_for('home')}}"><button type="button" class="sideButtons">Home</button></a>
   </li>
   <li >
-    <a href="{{url_for('show_all')}}"><button type="button" class="sideButtons">find out more</button></a>
+    <a href="{{url_for('more')}}"><button type="button" class="sideButtons">find out more</button></a>
   </li>
   <li>
-    <a href="{{url_for('show_all')}}"><button type="button" class="sideButtons" >logout</button></a>
+    <a href="{{url_for('logout')}}"><button type="button" class="sideButtons" >logout</button></a>
   </li>
 </ul>
 
@@ -55,7 +54,7 @@
 {% block col %}
 
 <div> 
-  <h2>Available Businesses and Services</h2>
+  <h2>Find available Businesses and Services</h2>
   <div id="choices">
   </div>
 </div>

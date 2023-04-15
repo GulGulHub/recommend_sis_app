@@ -5,14 +5,14 @@ let search_address;
 
 /* creating choices for the buttons from all the sisters in the database*/
 
-function createChoices() {
+/* function createChoices() {
   fetch(`/api/getAll`, { mode: "cors" })  
     .then(response => response.json())
     .then(data => {
       console.log(data);
       let all_sisters = data.sisters;
       let choicesDiv = document.getElementById('choices');
-      for (const sis of all_sisters) {
+      for (const sis of all_sisters) { 
         let button = document.createElement('button');
         button.innerText = sis.description;
         button.value = sis.description;
@@ -22,7 +22,25 @@ function createChoices() {
     })
     .catch(err => console.error(err));
 }
+ */
 
+function createChoices() {
+  fetch(`/api/getDescriptions`, { mode: "cors" })  
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      let all_sisters = data.sisters;
+      let choicesDiv = document.getElementById('choices');
+      for (const sis of all_sisters) { 
+        let button = document.createElement('button');
+        button.innerText = sis;
+        button.value = sis;
+        button.onclick = onClickValue;
+        choicesDiv.appendChild(button);
+      }
+    })
+    .catch(err => console.error(err));
+}
 
 document.body.onload = createChoices()
 
@@ -50,20 +68,6 @@ function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
 
 }
 
-/* 
-
-function getValue() {
-  data = document.getElementById('search-tag').value;
-  console.log('WE GOT', data)
-}
- */
-
-
-/* function onClickValue(){
-  const tag = this.value;
-  alert(tag)
-} */
- 
 
 
 
@@ -85,12 +89,12 @@ function onClickValue(){
       console.log(data);
       let all_searches = data.sister
       let header_text = document.createElement("h3")
-      header_text.innerText = "Your Results: "
       target_div.appendChild(header_text)
       for (const search_item of all_searches) {
         console.log("!!!", search_item)
+        header_text.innerText = `${search_item.description} : ` 
         let sis_text = document.createElement("div")
-        sis_text.innerText = search_item.fullname + "," + search_item.address + "," + search_item.description + "," + search_item.contact;
+        sis_text.innerText = search_item.fullname + " - " + search_item.address + " - " + search_item.description + " - " + search_item.contact;
         sis_text.setAttribute("id","sis_text")
         target_div.appendChild(sis_text);
         search_address = search_item.address;
@@ -117,7 +121,7 @@ function onClickValue(){
             });
 
             placePoint = firstResult.location;
-            placeInMap(placePoint);
+            placeInMap(placePoint, search_item.fullname, search_item.description, search_item.address, search_item.contact);
           } else {
             console.log("Geocode was not successful");
             // If you want to provide feedback to the user on the map page:
@@ -133,7 +137,7 @@ function onClickValue(){
 }
 
 
-function placeInMap(place) {
+function placeInMap(place, fullname, tag, address, contact) {
   const point = { //Create a point
     type: "point",
     longitude: place.longitude,
@@ -148,13 +152,14 @@ function placeInMap(place) {
       width: 3
     }
   };
+  
 
   const pointGraphic = new cGraphic({
     geometry: point,
     symbol: simpleMarkerSymbol,
     popupTemplate: {
-      title: "This is the title",
-      content: "Here we could put more information about this item",
+      title: fullname,
+      content:`${tag} : ${address} \n  ${contact}`,
       actions: [{
         title: "View Details",
         id: "view",
