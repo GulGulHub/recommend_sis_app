@@ -52,6 +52,8 @@ body {
 #button-color {
   color: white;
   font-weight: bold;
+  padding: 10px;
+  width: calc(100% - 20px);
 }
 
 #button-color:hover, #button-color:focus, #button-color:active {
@@ -63,6 +65,8 @@ body {
 #button-color-2 {
   color: white;
   font-weight: bold;
+  padding: 10px;
+  width: calc(100% - 20px);
 }
 
 #button-color-2:hover, #button-color-2:focus, #button-color-2:active {
@@ -73,6 +77,8 @@ body {
 #button-color-3 {
   color: white;
   font-weight: bold;
+  padding: 10px;
+  width: calc(100% - 20px);
 }
 
 #button-color-3:hover, #button-color-3:focus, #button-color-3:active {

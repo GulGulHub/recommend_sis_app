@@ -96,7 +96,7 @@ def login():
         if user and user.password == hashed_input_password:
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            flash(f'Welcome back {form.username.data}!')
+            flash(f'Login successful!')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check user name and password', 'danger')

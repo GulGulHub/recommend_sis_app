@@ -2,8 +2,9 @@ let cGraphic;
 let graphicsLayer;
 let view;
 let search_address;
+let firstResult;
 
-/* creating choices for the buttons from all the sisters in the database*/
+
 
 /* function createChoices() {
   fetch(`/api/getAll`, { mode: "cors" })  
@@ -24,6 +25,8 @@ let search_address;
 }
  */
 
+/* creating choices for the buttons from all the sisters in the database*/
+
 function createChoices() {
   fetch(`/api/getDescriptions`, { mode: "cors" })  
     .then(response => response.json())
@@ -43,6 +46,8 @@ function createChoices() {
 }
 
 document.body.onload = createChoices()
+
+
 
 /* initialize the Map from Esri */
 
@@ -70,11 +75,11 @@ function initMap(esriConfig, Map, MapView, Graphic, GraphicsLayer, locator) {
 
 
 
-
+/* gets the tag value of the constructed buttons and calls the api to get the address*/
 
 
 function onClickValue(){
-  const tag = this.value;
+  const tag = this.value; /* get value from onclick*/
   console.log(tag);
 
 
@@ -83,20 +88,28 @@ function onClickValue(){
   let search_address;
   let target_div = document.getElementById("Test_JS");
 
-  fetch(`/api/getAddress?tag=${tag}`, { mode: "cors" })
+  fetch(`/api/getAddress?tag=${tag}`, { mode: "cors" }) /* makes api call */
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
       let all_searches = data.sister
       let header_text = document.createElement("h3")
-      target_div.appendChild(header_text)
-      for (const search_item of all_searches) {
+      target_div.appendChild(header_text)               /* adds the tag as heade-text*/
+      for (const search_item of all_searches) {         /* for item from db: create text and get address for call later*/
         console.log("!!!", search_item)
         header_text.innerText = `${search_item.description} : ` 
         let sis_text = document.createElement("div")
         sis_text.innerText = search_item.fullname + " - " + search_item.address + " - " + search_item.description + " - " + search_item.contact;
         sis_text.setAttribute("id","sis_text")
+        sis_text.style.border = "thin solid #200589";
+        sis_text.style.padding = "3px 3px 3px 3px";
+        sis_text.style.width = "fit-content";
+        sis_text.style.cursor = "pointer";
+        sis_text.onclick = function() {
+          zoomToLocation(search_item);    /* I added this function so that if there are too many choices there is an easy zoom*/
+        }
         target_div.appendChild(sis_text);
+        
         search_address = search_item.address;
         const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 
@@ -106,7 +119,7 @@ function onClickValue(){
           },
         };
 
-        let firstResult;
+        
 
         esriLocator.addressToLocations(geocodingServiceUrl, params).then((results) => {
           if (results) {
@@ -117,7 +130,7 @@ function onClickValue(){
 
             view.goTo({
               target: firstResult.location,
-              zoom: 12,
+              zoom: 14,
             });
 
             placePoint = firstResult.location;
@@ -127,15 +140,48 @@ function onClickValue(){
             // If you want to provide feedback to the user on the map page:
             //document.getElementById('addressHelpBlock').innerHTML="Sorry! That search did not work, try again!";
           }
+
+          
         });
       }
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err)); 
+
+
 
   //prevent refresh
   return false;
+
 }
 
+
+/* Extrafunction to zoom to location*/
+
+function zoomToLocation(search_item) {
+  search_address = search_item.address;
+        const geocodingServiceUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+
+        const params = {
+          address: {
+            address: search_address,
+          },
+        };
+
+        esriLocator.addressToLocations(geocodingServiceUrl, params).then((results) => {
+          if (results) {
+            console.log("got result");
+            firstResult = results[0];
+            console.log(firstResult);
+            console.log(firstResult.address);
+
+            view.goTo({
+              target: firstResult.location,
+              zoom: 14,
+            });
+  }});
+}
+
+/* function that creates a point from the address.location above */
 
 function placeInMap(place, fullname, tag, address, contact) {
   const point = { //Create a point
@@ -143,7 +189,25 @@ function placeInMap(place, fullname, tag, address, contact) {
     longitude: place.longitude,
     latitude: place.latitude
   };
-  const simpleMarkerSymbol = {
+
+   /* creates the actual symbol/text on the map */
+
+  let textSymbol = {
+    type: "text",  // autocasts as new TextSymbol()
+    color: "#200589",
+    backgroundColor:"#ab20fd",
+    text: fullname,
+    xoffset: 3,
+    yoffset: 3,
+    font: {  // autocasts as new Font()
+      size: 8,
+      family: "Arial",
+      weight: "bold"
+    }
+  };
+
+
+  /* const simpleMarkerSymbol = {
     type: "simple-marker",
     style: "diamond",
     color: [255, 105, 180],  // Hotpink
@@ -151,20 +215,23 @@ function placeInMap(place, fullname, tag, address, contact) {
       color: [255, 255, 255], // White
       width: 3
     }
-  };
+  }; */
   
+  /* creates a popup */
 
   const pointGraphic = new cGraphic({
     geometry: point,
-    symbol: simpleMarkerSymbol,
+    symbol: /*simpleMarkerSymbol*/ textSymbol,
     popupTemplate: {
       title: fullname,
       content:`${tag} : ${address} \n  ${contact}`,
-      actions: [{
-        title: "View Details",
-        id: "view",
-        param: 1 // this is an additional attribute I added to be able to know the item id and costruct the detail page url on click
-      }]
+      actions: [
+        {
+        title: "View Profile",
+        id: "details",
+        image: "./womenGroup.jpg",
+      }
+    ]
     }
   });
 
@@ -174,6 +241,26 @@ function placeInMap(place, fullname, tag, address, contact) {
 
 };
 
+view.popup.watch("selectedFeature", (graphic) => {
+  if (graphic) {
+    const graphicTemplate = graphic.getEffectivePopupTemplate();
+    graphicTemplate.actions.items[0].visible = graphic.attributes.website ? true : false;
+  }
+});
+
+  
+
+  // this handles the click on "View Details"
+  view.popup.on("trigger-action", (event) => {
+    if (event.actions.id === "detail") {
+      window.open("/home")
+    }
+  });  
 
 
+function clearMarkers() {
+  graphicsLayer.removeAll();
+  let target_div = document.getElementById("Test_JS");
+  target_div.textContent = '';
+}
 
