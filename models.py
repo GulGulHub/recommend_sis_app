@@ -15,7 +15,7 @@ class User(UserMixin, db.Model):
     full_name = db.Column(db.String(200), nullable=False)  # i.e Hanna Barbera
     display_name = db.Column(db.String(20), unique=True, nullable=False)  # i.e hanna_25
     email = db.Column(db.String(120), unique=True, nullable=False)  # i.e hanna@hanna-barbera.com
-    password = db.Column(db.String(32), nullable=False)
+    password = db.Column(db.String(1000), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @classmethod

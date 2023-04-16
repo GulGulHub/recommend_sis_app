@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash, abo
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, login_manager
 
 from flask_cors import CORS
+from flask_bcrypt import Bcrypt
 
 
 from models import User, Sister
@@ -26,6 +27,7 @@ load_dotenv()                    #for python-dotenv method
 app = Flask(__name__)
 app.static_folder = 'static'
 with app.app_context():
+    bcrypt = Bcrypt(app)
     setup_db(app)
     db_drop_and_create_all()
     CORS(app)
@@ -63,8 +65,9 @@ def start():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # hash user password, create user and store it in database
+        #hash user password, create user and store it in database
         hashed_password = hashlib.md5(form.password.data.encode()).hexdigest()
+        #hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(
             full_name=form.fullname.data,
             display_name=form.username.data,
@@ -157,7 +160,10 @@ def recommend():
             return render_template("recommend.html", form=form, sisters=descriptions)
     return render_template("recommend.html", form=form)
 
-
+@app.route('/account', methods=['GET','POST'])
+@login_required
+def account():
+    return render_template("account.html")
 
 @app.route('/all', methods=['GET','POST'])
 @login_required
