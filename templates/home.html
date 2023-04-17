@@ -10,6 +10,7 @@
 <div class="vertical">
 <a id="button-color" class="btn btn-outline-light m-3" href="{{url_for('recommend')}}"> Recommend a Sist*A</a>    
 <a id="button-color-2" class="btn btn-outline-light m-3" href="{{url_for('find')}}"> Find a Sist*A</a>
+<a id="button-color-2" class="btn btn-outline-light m-3" href="{{url_for('account')}}"> Account </a>
 <a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
 <a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('logout')}}"> Log out </a>
 </div>
@@ -25,21 +26,21 @@
 <!-- Foto von <a href="https://unsplash.com/@wonderlane?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Wonderlane</a> auf <a href="https://unsplash.com/de/s/fotos/star-trek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   -->
 
-<div class="card mb-3">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <img src="{{url_for('static', filename='BildFrauengruppe.png')}}" class="img-fluid rounded-start" alt="...">
+<div class="row wrapper_title">      
+      <div class="col-md-4 img_text">
+            <img id="img_w" src="{{url_for('static', filename='BildFrauengruppe.png')}}" class="img-fluid" alt="...">
         </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="Lets get started">Welcome back {{ name }}</h5>
-                <p class="card-text">Here is an overview of your last searches and recommendations</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+        <div class="col-md-8 title_text">
+            <div>
+                <h1 class="display-2">Welcome back !!!</h1>
+              
+               
+          
             </div>
         </div>
+
     </div>
-</div>
+
 
 
 

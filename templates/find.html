@@ -39,6 +39,9 @@
     <a href="{{url_for('home')}}"><button type="button" class="sideButtons">Home</button></a>
   </li>
   <li >
+    <a href="{{url_for('account')}}"><button type="button" class="sideButtons">Account</button></a>
+  </li>
+  <li >
     <a href="{{url_for('more')}}"><button type="button" class="sideButtons">find out more</button></a>
   </li>
   <li>
@@ -62,6 +65,7 @@
   <div>
     <button type="button" onclick="showAllOnMap()"> View ALL </button>
     <button type="button" onclick="clearMarkers()" id="clearButton"> Clear Search </button>
+    <button type="button" onclick="save_all()" id="clearButton"> Save search to favorites </button>
   </div>
 
 </div>

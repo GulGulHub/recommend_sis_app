@@ -346,7 +346,13 @@ function clearMarkers() {
 }
 
 
+/** this function will save the search to the favorites */
 
+function save_all() {
+  let allData = document.getElementById("Test_JS").innerText;
+  localStorage.setItem("allData", allData);
+  alert("your search has been saved to your page")
+}
 
 
 

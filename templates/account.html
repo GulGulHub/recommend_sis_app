@@ -2,5 +2,45 @@
 {% block head %}
 <title> {{ current_user.display_name }}</title>
 <link rel="stylesheet" href="static/style.css">
+script src="{{url_for('static', filename='account.js')}}"></script>
 
 {% endblock %}
+
+{% block side %}
+
+<div class="vertical">
+<a id="button-color" class="btn btn-outline-light m-3" href="{{url_for('recommend')}}"> Recommend a Sist*A</a>    
+<a id="button-color-2" class="btn btn-outline-light m-3" href="{{url_for('find')}}"> Find a Sist*A</a>
+<a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
+<a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('logout')}}"> Log out </a>
+</div>
+
+{% endblock side %}
+
+{% block col%}
+
+<div class="account_user">
+    <div class="media">
+      <img class="rounded-circle account-img" src="{{ url_for('static', filename='rsz_spok.jpg')}}">
+      <div class="media-body">
+        <h1 class="account-heading">{{ current_user.display_name }}</h1>
+        <p class="text-secondary">{{current_user.email}}</p>
+      </div>
+    </div>
+    <!-- FORM HERE -->
+  </div>
+
+  <div >
+    <h2>
+        My Favorites
+    </h2>
+
+    <div id="favorite_sisters">
+
+    </div>
+
+
+
+  </div>
+
+{% endblock col %}
