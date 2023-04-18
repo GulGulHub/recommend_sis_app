@@ -88,13 +88,14 @@ class RecommendSisterForm(FlaskForm):
 
     description = SelectField(
         'Tag / Service / Business-Type',
-        choices=[('', 'Select an existing option')]  # Empty option for dropdown
+        choices=[('', 'Select an existing option')],  # Empty option for dropdown,
+        validate_choice=False,
     )
 
     new_description = StringField(
         'New-Tag / Service / Business-Type',
         validators=[
-            Length(min=2, max=20)
+            Length(max=20)
         ]
     )
 

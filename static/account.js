@@ -1,8 +1,12 @@
-window.onload = function() {
+
+  console.log("JS has started");
     let favorite_all = document.getElementById("favorite_sisters");
     let allData = localStorage.getItem("allData");
     if (allData) {
-      favorite_all.innerText = allData;
-      localStorage.removeItem("allData"); // Optional: remove the stored data after use
+      for (let sister in allData) {
+        console.log(typeof allData)
+      }
+      favorite_all.innerHTML = allData;
+
     }
-  };
+ 

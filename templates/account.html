@@ -2,7 +2,7 @@
 {% block head %}
 <title> {{ current_user.display_name }}</title>
 <link rel="stylesheet" href="static/style.css">
-script src="{{url_for('static', filename='account.js')}}"></script>
+
 
 {% endblock %}
 
@@ -36,6 +36,8 @@ script src="{{url_for('static', filename='account.js')}}"></script>
     </h2>
 
     <div id="favorite_sisters">
+     
+
 
     </div>
 
@@ -43,4 +45,6 @@ script src="{{url_for('static', filename='account.js')}}"></script>
 
   </div>
 
+  <script src="{{url_for('static', filename='account.js')}}" ></script>
+  
 {% endblock col %}

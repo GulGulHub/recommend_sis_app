@@ -352,6 +352,7 @@ function save_all() {
   let allData = document.getElementById("Test_JS").innerText;
   localStorage.setItem("allData", allData);
   alert("your search has been saved to your page")
+  console.log(allData)
 }
 
 
