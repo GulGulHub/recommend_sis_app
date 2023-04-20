@@ -261,6 +261,7 @@ function showAllOnMap() {
 /* function that creates a point from the address.location above */
 
 function placeInMap(place, fullname, tag, address, contact) {
+  
   const point = { //Create a point
     type: "point",
     longitude: place.longitude,
@@ -309,34 +310,40 @@ function placeInMap(place, fullname, tag, address, contact) {
       actions: [
         {
         title: "View Profile",
-        id: "details",
-        image: "./womenGroup.jpg",
+        id: "view",
+        image: "./static/heim.png",
       }
     ]
     }
+
   });
 
   graphicsLayer.add(pointGraphic);
 
-  return pointGraphic;
+   // this handles the click on "View Details"
+ view.popup.on("trigger-action", (event) => {
+  console.log(fullname)
+    window.open("/home")
+    
+  
+});  
+
+  return pointGraphic;   
 
 };
 
-view.popup.watch("selectedFeature", (graphic) => {
+
+
+/*view.popup.watch("selectedFeature", (graphic) => {
   if (graphic) {
     const graphicTemplate = graphic.getEffectivePopupTemplate();
     graphicTemplate.actions.items[0].visible = graphic.attributes.website ? true : false;
   }
-});
+}); */
 
   
 
-  // this handles the click on "View Details"
-  view.popup.on("trigger-action", (event) => {
-    if (event.actions.id === "detail") {
-      window.open("/home")
-    }
-  });  
+ 
 
 
 function clearMarkers() {
