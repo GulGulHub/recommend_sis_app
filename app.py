@@ -63,11 +63,13 @@ def start():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         #hash user password, create user and store it in database
-        hashed_password = hashlib.md5(form.password.data.encode()).hexdigest()
-        #hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        #hashed_password = hashlib.md5(form.password.data.encode()).hexdigest()
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(
             full_name=form.fullname.data,
             display_name=form.username.data,
@@ -88,6 +90,8 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     # Sanity check: if the user is already authenticated then go back to home page
     # if current_user.is_authenticated:
     #   return redirect(url_for('home'))
@@ -95,8 +99,9 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(display_name=form.username.data).first()
-        hashed_input_password = hashlib.md5(form.password.data.encode()).hexdigest()
-        if user and user.password == hashed_input_password:
+        #hashed_input_password = hashlib.md5(form.password.data.encode()).hexdigest()
+        #if user and user.password == hashed_input_password:
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash(f'Login successful!')
@@ -172,7 +177,7 @@ def show_all():
     return render_template("all.html", all_sisters = all_sisters)
 
 @app.route('/find', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def find():
     form = FindForm()
     if form.validate_on_submit():
