@@ -3,6 +3,7 @@ let graphicsLayer;
 let view;
 let search_address;
 let firstResult;
+let savedSearches = [];
 
 
 
@@ -96,7 +97,10 @@ function onClickValue(){
       let header_text = document.createElement("h3")
       target_div.appendChild(header_text)               /* adds the tag as heade-text*/
       for (const search_item of all_searches) {         /* for item from db: create text and get address for call later*/
-        console.log("!!!", search_item)
+        const search_results = search_item;
+        savedSearches.push(search_results);
+        console.log("&&&&", search_item)
+        console.log("!!!", savedSearches)
         header_text.innerText = `${search_item.description} : ` 
         let sis_text = document.createElement("div")
         sis_text.innerText = search_item.fullname + " - " + search_item.address + " - " + search_item.description + " - " + search_item.contact;
@@ -236,6 +240,7 @@ function showAllOnMap() {
             });
 
             placePoint = firstResult.location;
+            console.log(placePoint);
             placeInMap(placePoint, search_item.fullname, search_item.description, search_item.address, search_item.contact);
           } else {
             console.log("Geocode was not successful");
@@ -343,8 +348,6 @@ function placeInMap(place, fullname, tag, address, contact) {
 
   
 
- 
-
 
 function clearMarkers() {
   graphicsLayer.removeAll();
@@ -356,11 +359,30 @@ function clearMarkers() {
 /** this function will save the search to the favorites */
 
 function save_all() {
-  let allData = document.getElementById("Test_JS").innerText;
-  localStorage.setItem("allData", allData);
-  alert("your search has been saved to your page")
-  console.log(allData)
-}
+  
 
+  fetch(`/api/saveSearches`, {
 
+    method: 'POST',
+      body: JSON.stringify(savedSearches),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.status==200) {
+        alert('Search item saved successfully!');
+        
+      } else {
 
+        throw new Error('Failed to save search item');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert('Error saving search item');
+    });
+
+  }
+
+  

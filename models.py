@@ -17,8 +17,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)  # i.e hanna@hanna-barbera.com
     password = db.Column(db.String(60), nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    saved_sisters = db.Column(db.String(100), nullable=False, default="no searchdata saved")
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    saved_sisters = db.relationship('SavedSearches', backref='user', lazy=True)
 
     @classmethod
     def get_by_id(cls, user_id):
@@ -52,6 +52,7 @@ class Sister(UserMixin, db.Model):
     contact = db.Column(db.String(120), nullable=False)  # an email, webpage, phonenumber
     address = db.Column(db.String(100), nullable=False)  # an address in Berlin
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    saved_by = db.relationship('SavedSearches', backref='sister', lazy=True)
 
     @classmethod
     def get_by_id(cls, id):
@@ -78,5 +79,23 @@ class Sister(UserMixin, db.Model):
         return self.query.filter_by(description=tag).all()
 
 
+class SavedSearches(db.Model):
+    __tablename__ = 'table_saved_searches'
 
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('table_users.id'), nullable=False)
+    sister_id = db.Column(db.Integer, db.ForeignKey('table_sisters.id'), nullable=False)
 
+    def __repr__(self):
+        return f"Saved Search: ({self.user_id}, {self.sister_id})"
+    
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()

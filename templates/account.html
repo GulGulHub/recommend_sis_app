@@ -36,6 +36,14 @@
     </h2>
 
     <div id="favorite_sisters">
+
+      {% if saved_search %}
+      {% for sis in saved_search %}
+      <h3> {{sis.fullname}} </h3>
+      <h4> {{sis.description}}</h4>
+      <p> {{sis.contact }} -  {{sis.address}} </p>
+      {% endfor%}
+      {% endif %}
      
 
 
@@ -45,6 +53,6 @@
 
   </div>
 
-  <script src="{{url_for('static', filename='account.js')}}" ></script>
+ 
   
 {% endblock col %}
