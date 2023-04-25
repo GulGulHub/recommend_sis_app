@@ -9,10 +9,10 @@
 {% block side %}
 
 <div class="vertical">
-<a id="button-color" class="btn btn-outline-light m-3" href="{{url_for('recommend')}}"> Recommend a Sist*A</a>    
-<a id="button-color-2" class="btn btn-outline-light m-3" href="{{url_for('find')}}"> Find a Sist*A</a>
-<a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
-<a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('logout')}}"> Log out </a>
+  <a id="button-color" class="btn btn-outline-light m-3" href="{{url_for('recommend')}}"> Recommend a Sist*A</a>
+  <a id="button-color-2" class="btn btn-outline-light m-3" href="{{url_for('find')}}"> Find a Sist*A</a>
+  <a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
+  <a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('logout')}}"> Log out </a>
 </div>
 
 {% endblock side %}
@@ -20,19 +20,21 @@
 {% block col%}
 
 <div class="account_user">
-    <div class="media">
-      <img class="rounded-circle account-img" src="{{ url_for('static', filename='rsz_spok.jpg')}}">
-      <div class="media-body">
-        <h1 class="account-heading">{{ current_user.display_name }}</h1>
-        <p class="text-secondary">{{current_user.email}}</p>
-      </div>
+  <div class="media">
+    <img class="rounded-circle align-self-start mr-3" src="{{ url_for('static', filename='rsz_spok.jpg')}}">
+    <div class="media-body">
+      <h1 class="account-heading mt-0">{{ current_user.display_name }}</h1>
+      <p class="text-secondary">{{current_user.email}}</p>
     </div>
-    <!-- FORM HERE -->
   </div>
+  <!-- FORM HERE -->
+</div>
 
-  <div >
+<div class="row">
+
+  <div class="col-6 ">
     <h2>
-        My Favorites
+      My Favorites
     </h2>
 
     <div id="favorite_sisters">
@@ -41,18 +43,32 @@
       {% for sis in saved_search %}
       <h3> {{sis.fullname}} </h3>
       <h4> {{sis.description}}</h4>
-      <p> {{sis.contact }} -  {{sis.address}} </p>
+      <p> {{sis.contact }} - {{sis.address}} </p>
       {% endfor%}
       {% endif %}
-     
-
 
     </div>
+  </div>
 
+  <div class="col-6 ">
+    <div>
+      <h3> Token Generator</h3>
+      <p> Create a token for a friend. Each token you generate can only be used once.</p>
+      <form method="post" action="">
+        <div class="form-group" id="#token-generator">
+          {{ form.submit(class='btn btn-outline-dark')}}
+      </div>
+    </form>
+    </div>
 
+    {% if token %}
+
+    <h3> {{token}} </h3>
+
+    {% endif %}
 
   </div>
 
- 
-  
-{% endblock col %}
+
+</div>
+  {% endblock col %}

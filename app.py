@@ -1,5 +1,6 @@
 import traceback
 import os
+import random
 from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify, make_response
 
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, login_manager
@@ -9,7 +10,7 @@ from flask_bcrypt import Bcrypt
 
 
 from models import User, Sister, SavedSearches
-from forms import RegistrationForm, LoginForm, RecommendSisterForm, FindForm
+from forms import RegistrationForm, LoginForm, RecommendSisterForm, FindForm, CreateTokenForm
 from sqlalchemy.exc import IntegrityError
 import hashlib
 
@@ -174,6 +175,10 @@ def account():
         .all()
     if saved_search:
         return render_template("account.html", saved_search = saved_search)
+    if request.method == ['Post']:
+        if request.form.get('token') == 'create_token':
+            token = random.randrange(100000, 1000000)  # randrange is exclusive at the stop
+            return render_template("account.html", token = token, saved_search=saved_search)    
     else:
         return render_template("account.html")
 

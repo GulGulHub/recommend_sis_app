@@ -141,3 +141,7 @@ class FindForm(FlaskForm):
     )
     submit = SubmitField('Find')
 
+
+class CreateTokenForm(FlaskForm):
+
+    submit = SubmitField('create Token')

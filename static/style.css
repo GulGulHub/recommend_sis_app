@@ -49,6 +49,13 @@ body {
   background: linear-gradient(to bottom, #7d12ff, #ab20fd) !important;
 }
 
+
+#token-generator{
+  color: white;
+  background-color: #ab20fd;
+  font-weight: bold !important;
+}
+
 #button-color {
   color: white;
   font-weight: bold !important;
