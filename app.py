@@ -168,19 +168,29 @@ def recommend():
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
+    form = CreateTokenForm()
+    token = random.randrange(100000, 1000000)  # randrange is exclusive at the stop
     user_id = current_user.id
     saved_search = Sister.query\
         .join(SavedSearches)\
         .filter(SavedSearches.user_id == user_id)\
         .all()
-    if saved_search:
-        return render_template("account.html", saved_search = saved_search)
-    if request.method == ['Post']:
-        if request.form.get('token') == 'create_token':
-            token = random.randrange(100000, 1000000)  # randrange is exclusive at the stop
-            return render_template("account.html", token = token, saved_search=saved_search)    
+    if saved_search and request.method == "POST":
+        flash("Token created and saved in Database")
+        return render_template("account.html", saved_search = saved_search, token = token, form=form)
+    elif saved_search:
+        return render_template("account.html", saved_search = saved_search, form=form)
+    elif request.method == "POST":
+        flash("Token created and saved in Database")
+        return render_template("account.html", token = token, form=form)    
     else:
-        return render_template("account.html")
+        return render_template("account.html", form=form)
+    
+
+@app.route('/FAQ', methods=['GET'])
+@login_required
+def FAQ():
+    return render_template('FAQ.html')    
 
 
 @app.route('/all', methods=['GET', 'POST'])

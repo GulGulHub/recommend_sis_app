@@ -56,14 +56,16 @@ body {
   font-weight: bold !important;
 }
 
-#button-color {
+
+
+.button-color {
   color: white;
   font-weight: bold !important;
   padding: 10px;
   width: calc(100% - 20px);
 }
 
-#button-color:hover, #button-color:focus, #button-color:active {
+.button-color:hover, #button-color:focus, #button-color:active {
   color: white;
   background-color: #ab20fd;
 }
