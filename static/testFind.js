@@ -104,11 +104,6 @@ function onClickValue(){
         header_text.innerText = `${search_item.description} : ` 
         let sis_text = document.createElement("div")
         sis_text.innerText = search_item.fullname + " - " + search_item.address + " - " + search_item.description + " - " + search_item.contact;
-        sis_text.setAttribute("id","sis_text")
-        sis_text.style.border = "thin solid #200589";
-        sis_text.style.padding = "3px 3px 3px 3px";
-        sis_text.style.width = "fit-content";
-        sis_text.style.cursor = "pointer";
         sis_text.onclick = function() {
           zoomToLocation(search_item);    /* I added this function so that if there are too many choices there is an easy zoom*/
         }
@@ -199,10 +194,11 @@ function showAllOnMap() {
       console.log(data);
       let all_searches = data.sisters
       console.log("!!HIER!!",data.sisters)
-      let header_text = document.createElement("h3")
-      target_div.appendChild(header_text)               /* adds the tag as heade-text*/
+      
       for (const search_item of all_searches) {         /* for item from db: create text and get address for call later*/
         console.log("!!!", search_item)
+        let header_text = document.createElement("h3")
+        target_div.appendChild(header_text)               /* adds the tag as heade-text*/
         header_text.innerText = `${search_item.description} : ` 
         let sis_text = document.createElement("div")
         sis_text.innerText = search_item.fullname + " - " + search_item.address + " - " + search_item.description + " - " + search_item.contact;

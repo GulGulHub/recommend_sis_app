@@ -20,7 +20,6 @@ html,body {
   width: 100%;
 }
 
-
 #top-section {
   display: flex;
   justify-content: center;
@@ -62,7 +61,6 @@ ul {
 
 }
 
-
 button {
   border: solid 2px #7d12ff;
   background-color: white;
@@ -76,9 +74,6 @@ button {
   padding: 3px;
   width: calc(30% - 6px);
 }
-
-
-
 
 main {
   width: 80%;
@@ -95,11 +90,13 @@ main {
 #sis_text {
   margin: 0.4em;
   padding: 0,5em;
+  border: thin solid #200589;
+  width: fit-content;
+  padding: 3px 3px 3px 3px;
+  cursor: pointer;
 }
 
-
 #mama-div  {
-
   margin: 0;
   height: 100%;
   width: 100%;
@@ -109,7 +106,6 @@ main {
 padding-left: 5%; 
 width:600px;
 height:400px;
-
 }
 
 
@@ -117,3 +113,4 @@ height:400px;
   display:inline-block;
   /* additional code */
   }
+
