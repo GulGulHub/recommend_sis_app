@@ -1,18 +1,17 @@
 {% extends "layout.html" %}
 
 {% block head %}
-<title>Registration</title>
-<link rel="stylesheet" href="static/style.css">
+    <title>Registration</title>
+    <link rel="stylesheet" href="static/style.css">
 {% endblock %}
 
 {% block side %}
+    <div class="vertical">
+        <a class="button-color btn btn-outline-light m-3" href="{{url_for('login')}}"> Log In </a>
+        <a class="button-color btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
+    </div>
+{% endblock %}
 
-<div class="vertical">
-<a id="button-color" class="btn btn-outline-light m-3" href="{{url_for('login')}}"> Log In </a>
-<a id="button-color-3" class="btn btn-outline-light  m-3" href="{{url_for('more')}}"> find out more. </a>
-</div>
-
-{% endblock side %}
 
 {% block col %}
 <div id="container">
