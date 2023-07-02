@@ -1,6 +1,6 @@
 # Recommend a Sist*A
 
-# Find and Recommend Businesses and Services of BIW*oC and Migrant Women* in Berlin.
+Find and Recommend Businesses and Services for BIW&ast; oC and Migrant Women&ast; in Berlin.
 
 using ArgGis the user can make recommendations and mark these on the map. 
 The user can also search for recommendations and save them to their profile.
